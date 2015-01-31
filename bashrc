@@ -6,10 +6,9 @@ alias mv='mv -v -i'
 alias cp='cp -v -i'
 alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
-alias basr='. /root/.profile'
 shopt -s autocd
 hdd='/i-data/md0'
-alias basr='. /ffp/home/root/.bashrc'
+alias basr='. ~/.bashrc'
 export PS1="\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
 # Make sure that there is no logging of the session.
 # Privacy issues and it was mentioned that logging makes slow the logout.
