@@ -20,6 +20,8 @@ set hlsearch
 set ignorecase
 set smartcase
 
+set hidden
+
 map <F5> :so %<CR>
 map <C-a>a :set rnu<CR>
 map <C-a>s :set number<CR>
