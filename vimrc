@@ -7,9 +7,16 @@ set smartindent
 set smarttab
 set shiftwidth=3
 set softtabstop=2
-set tabstop=2
+set tabstop=2 "rozmiar tabulatora
+set showmatch         " pokaz otwieraj±cy nawias gdy wpisze zamykaj±
+set ruler             " show the cursor position all the time
+
 set expandtab
 set list listchars=tab:\ \ ,trail:·
+colorscheme desert  "Sets defaut color scheme
+set expandtab         " Check what is it
+set laststatus=2      " zawsze pokazuj linie statusu
+set notagbsearch      " dodaje mozliwosc logow bez szukania /dzieki temu nie ma errora: E432: Tags file not sorted: tags ani E257
 
 set switchbuf=usetab
 set wildmode=list:longest
@@ -21,8 +28,10 @@ set ignorecase
 set smartcase
 
 set hidden
+map <F4> :so %<CR>
+map <F8> :set norelativenumber<CR>:set nonumber<CR>
+map <F9> :call NumberToggle()<CR>
 
-map <F5> :so %<CR>
 map <C-a>a :set rnu<CR>
 map <C-a>s :set number<CR>
 imap <F2> <ESC>:w<CR>li
@@ -57,3 +66,21 @@ command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>,
 cabbrev shell Shell
 
 command! Mm call s:ExecuteInShell('./m','')
+
+" zaznacz biale znaki na koncach linii
+autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
+autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
+highlight EOLWS ctermbg=red guibg=red
+
+"""""""" hint na podpowiadanie tab'em
+set wildchar=<TAB> wildmenu wildmode=full
+set wildcharm=<C-Z>
+nnoremap <TAB> :b <C-Z>
+
+"""""""" show 120column and overlenght string
+set cc=120
+hi ColorColumn ctermbg=lightred guibg=lightgrey
+"hi ColorColumn ctermbg=DarkGrey
+
+highlight OverLength ctermfg=white ctermbg=lightred
+match OverLength /\%121v.\+/
