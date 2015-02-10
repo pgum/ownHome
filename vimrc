@@ -31,10 +31,23 @@ set hidden
 map <F4> :so %<CR>
 map <F8> :set norelativenumber<CR>:set nonumber<CR>
 map <F9> :call NumberToggle()<CR>
+map <F12> :set wrap!<CR>    
 
-map <C-a>a :set rnu<CR>
-map <C-a>s :set number<CR>
 imap <F2> <ESC>:w<CR>li
+
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+        highlight LineNr ctermfg=yellow
+    else
+        set relativenumber
+        set nonumber
+        highlight LineNr ctermfg=green
+    endif
+endfunc
+
+
 
 function! s:ExecuteInShell(command, bang)
 	let _ = a:bang != '' ? s:_ : a:command == '' ? '' : join(map(split(a:command), 'expand(v:val)'))
