@@ -1,4 +1,30 @@
 echo "$0 WGRANY!"
+
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+#<C-s> putty freezer fix
+[[ $- == *i* ]] && stty -ixany
+[[ $- == *i* ]] && stty ixoff -ixon
+
+
+fgp()
+{
+    find . -name *$1* -exec grep -l "$2" {} \;
+}
+
+
+##PUTTY
+alias clr="clear && printf '\033[3J'"
+
+alias tarit='tar -cvf '
+alias untarit='tar -xf '
+
+alias h='history | grep $1'
+alias top-commands='history | awk "{print $2}" | awk "BEGIN {FS="|"} {print $1}" |sort|uniq -c | sort -rn | head -10'
+
+
 alias ll='ls -Al --color=always'
 alias ls='ls -A --color=always'
 alias ..='cd ..'
@@ -16,3 +42,4 @@ unset HISTFILE
 export PATH=./:$PATH
 export GREP_OPTIONS='--color=auto'
 alias svig="svn propedit svn:ignore"
+
