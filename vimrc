@@ -7,16 +7,16 @@ set smartindent
 set smarttab
 set shiftwidth=3
 set softtabstop=2
-set tabstop=2 "rozmiar tabulatora
-set showmatch         " pokaz otwieraj±cy nawias gdy wpisze zamykaj±
-set ruler             " show the cursor position all the time
+set tabstop=2       "tab step size
+set showmatch       " matching brackets
+set ruler           "show the cursor position
 
 set expandtab
-set list listchars=tab:\ \ ,trail:·
+"set list listchars=tab:\ \ ,trail:·
 colorscheme desert  "Sets defaut color scheme
-set expandtab         " Check what is it
-set laststatus=2      " zawsze pokazuj linie statusu
-set notagbsearch      " dodaje mozliwosc logow bez szukania /dzieki temu nie ma errora: E432: Tags file not sorted: tags ani E257
+set expandtab       " Check what is it
+set laststatus=2    " zawsze pokazuj linie statusu
+set notagbsearch    " dodaje mozliwosc logow bez szukania /dzieki temu nie ma errora: E432: Tags file not sorted: tags ani E257
 
 set switchbuf=usetab
 set wildmode=list:longest
@@ -27,27 +27,37 @@ set hlsearch
 set ignorecase
 set smartcase
 
+fun! TurnNumbersOn()
+   set number
+   highlight LineNr ctermfg=yellow
+endfun
+fun! TurnRelNumbersOn()
+   set relativenumber
+   highlight LineNr ctermfg=green
+endfun
+fun! TurnNumbersOff()
+   set nonumber
+   set norelativenumber
+endfun
+
+let s:numtgl = 0
+fun! NumberToggle()
+   if s:numtgl == 2
+      let s:numtgl = 0
+      call TurnNumbersOn()
+   elseif s:numtgl == 0
+      let s:numtgl = 1
+      call TurnRelNumbersOn()
+   elseif s:numtgl == 1
+      let s:numtgl = 2
+      call TurnNumbersOff()
+   endif
+endfun
+
+
 set hidden
 map <F4> :so %<CR>
-map <F8> :set norelativenumber<CR>:set nonumber<CR>
 map <F9> :call NumberToggle()<CR>
-map <F12> :set wrap!<CR>    
-
-imap <F2> <ESC>:w<CR>li
-
-function! NumberToggle()
-    if(&relativenumber == 1)
-        set norelativenumber
-        set number
-        highlight LineNr ctermfg=yellow
-    else
-        set relativenumber
-        set nonumber
-        highlight LineNr ctermfg=green
-    endif
-endfunc
-
-
 
 function! s:ExecuteInShell(command, bang)
 	let _ = a:bang != '' ? s:_ : a:command == '' ? '' : join(map(split(a:command), 'expand(v:val)'))
@@ -91,9 +101,25 @@ set wildcharm=<C-Z>
 nnoremap <TAB> :b <C-Z>
 
 """""""" show 120column and overlenght string
+let s:hlLenghtyLines = 1
 set cc=120
-hi ColorColumn ctermbg=lightred guibg=lightgrey
-"hi ColorColumn ctermbg=DarkGrey
 
-highlight OverLength ctermfg=white ctermbg=lightred
-match OverLength /\%121v.\+/
+fun! TurnHighlightOn()
+   hi ColorColumn NONE
+endfun
+
+fun! TurnHighlightOff()
+   hi ColorColumn ctermfg=white ctermbg=darkred
+endfun
+
+fun! ToggleOverLenghtHighlightPlx()
+   if s:hilightws
+      let s:hlLenghtyLines = 0
+      call TurnHighlightOn()
+   else
+      let s:hlLenghtyLines = 1
+      call TurnHighlightOff()
+   endif
+endfun
+
+map <F12> :call ToggleOverLenghtHighlightPlx()<CR>
