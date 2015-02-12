@@ -36,9 +36,10 @@ set wildchar=<TAB> wildmenu wildmode=full
 set wildcharm=<C-Z>
 
 set hlsearch
+set incsearch
 set ignorecase
 set smartcase
-set colorcolumn =120
+set colorcolumn=120
 
 nnoremap <TAB> :b <C-Z>
 map <F4> :so %<CR>
