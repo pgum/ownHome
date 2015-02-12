@@ -1,4 +1,6 @@
 set nocompatible
+filetype plugin on
+set modeline
 
 source ~/.vimrc.func
 
