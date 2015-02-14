@@ -24,9 +24,9 @@ alias untarit='tar -xf '
 alias h='history | grep $1'
 alias top-commands='history | awk "{print $2}" | awk "BEGIN {FS="|"} {print $1}" |sort|uniq -c | sort -rn | head -10'
 
-
-alias ll='ls -Al --color=always'
 alias ls='ls -A --color=always'
+alias ll='ls -l'
+
 alias ..='cd ..'
 alias mv='mv -v -i'
 alias cp='cp -v -i'

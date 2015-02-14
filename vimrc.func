@@ -47,7 +47,6 @@ endfun
 """"""""""""""""""""""""""""""""""""""""""""""""""
 function! s:ExecuteInShell(command, bang)
 	let _ = a:bang != '' ? s:_ : a:command == '' ? '' : join(map(split(a:command), 'expand(v:val)'))
-
 	if (_ != '')
 		let s:_ = _
 		let bufnr = bufnr('%')
