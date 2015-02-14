@@ -1,3 +1,4 @@
+" vim:syntax=vim
 """"""""""""""""""""""""""""""""""""""""""""""""""
 fun! TurnColorColumnOn()
    hi ColorColumn ctermfg=white ctermbg=darkred 
@@ -72,3 +73,20 @@ function! s:ExecuteInShell(command, bang)
 endfunction
 command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>, '<bang>')
 cabbrev shell Shell
+""""""""""""""""""""""""""""""""""""""""""""""""""
+function! SearchForLocalVimrc()
+  let localVimrcFilename=".vimrc.local"
+  let PathPrefix=expand("./")
+  if filereadable(PathPrefix.localVimrcFilename)
+    execute ":so " .PathPrefix.localVimrcFilename
+  endif
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenFileFromString(PathToFile)
+  echo a:PathToFile
+  execute ":e ". a:PathToFile
+endfunction
+
+
+
+
