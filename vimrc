@@ -52,3 +52,6 @@ autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 highlight EOLWS ctermbg=red
 
 command! Mm call s:ExecuteInShell('./m','')
+
+" szukaj lokalnego pliku vimrc w katalogu otwieranego pliku
+autocmd BufReadPre *.[ch]pp call SearchForLocalVimrc()
