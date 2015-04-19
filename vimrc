@@ -1,11 +1,15 @@
 set nocompatible
+source ~/.vimrc.vundle  " Plugin manager configurations
+source ~/.vimrc.func    " Functions library
+source ~/.vimrc.plugins " Plugins config
+source ~/.vimrc.map     " Key bindings
+filetype plugin indent on    " required
+"
 filetype plugin on
 set modeline
 
-source ~/.vimrc.func
-
 syntax on
-colorscheme desert  "Sets defaut color scheme
+colorscheme desert "Sets defaut color scheme
 
 set showcmd
 set number
@@ -41,22 +45,18 @@ set ignorecase
 set smartcase
 set colorcolumn=120
 
-nnoremap <TAB> :b <C-Z>
-map <F4> :so %<CR>
-map <F12> :call ToggleColorColumn()<CR>
-map <F9> :call NumberToggle()<CR>
 
 " zaznacz biale znaki na koncach linii
 autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
 autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 highlight EOLWS ctermbg=red
 
-command! Mm call s:ExecuteInShell('./m','')
-let mapleader = "-"
-nnoremap <leader>f :w !diff - %<cr>
 " szukaj lokalnego pliku vimrc w katalogu otwieranego pliku
 autocmd BufReadPre *.[ch]pp call SearchForLocalVimrc()
   " Disable auto popup, use <Tab> to autocomplete
   let g:clang_complete_auto = 0
 " Show clang errors in the quickfix window
 let g:clang_complete_copen = 1
+
+
+
