@@ -20,8 +20,8 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tpope/vim-surround'
 Plugin 'godlygeek/tabular'
 " Color scheme
-Plugin 'atelierbram/vim-colors_atelier-schemes'
-Plugin 'tomasr/molokai'
+" Plugin 'atelierbram/vim-colors_atelier-schemes'
+" Plugin 'tomasr/molokai'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
