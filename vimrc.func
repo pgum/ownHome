@@ -86,6 +86,3 @@ function! OpenFileFromString(PathToFile)
   execute ":e ". a:PathToFile
 endfunction
 
-
-
-

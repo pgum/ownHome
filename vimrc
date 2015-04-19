@@ -3,14 +3,12 @@ source ~/.vimrc.vundle  " Plugin manager configurations
 source ~/.vimrc.func    " Functions library
 source ~/.vimrc.plugins " Plugins config
 source ~/.vimrc.map     " Key bindings
-filetype plugin indent on    " required
 "
 filetype plugin on
 set modeline
 
 syntax on
-colorscheme desert "Sets defaut color scheme
-
+colorscheme desert "molokai
 set showcmd
 set number
 
@@ -32,19 +30,11 @@ set notagbsearch    " dodaje mozliwosc logow bez szukania /dzieki temu nie ma er
 set switchbuf=usetab
 set hidden
 
-"set wildmode=list:longest
-"set wildmenu                "enable ct\l-n and ctrl-p to scroll thru matches
-"set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
-"set wildignore+=*vim/backups*
-"set wildchar=<TAB> wildmenu wildmode=full
-"set wildcharm=<C-Z>
-
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set colorcolumn=120
-
 
 " zaznacz biale znaki na koncach linii
 autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
@@ -54,9 +44,6 @@ highlight EOLWS ctermbg=red
 " szukaj lokalnego pliku vimrc w katalogu otwieranego pliku
 autocmd BufReadPre *.[ch]pp call SearchForLocalVimrc()
   " Disable auto popup, use <Tab> to autocomplete
-  let g:clang_complete_auto = 0
+let g:clang_complete_auto = 0
 " Show clang errors in the quickfix window
 let g:clang_complete_copen = 1
-
-
-
