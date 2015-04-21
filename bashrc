@@ -42,5 +42,18 @@ export PS1="\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
 unset HISTFILE
 export PATH=./:$PATH
 export GREP_OPTIONS='--color=auto'
-alias svig="svn propedit svn:ignore"
+
 alias dea="deactivate"
+
+alias svig="svn propedit svn:ignore"
+
+loadAdditionalBashrcToConfig(){
+  echo -n "Loaded config: "
+  for additionalBashrc in ~/.bashrc.*; do
+    echo -n "$(basename $additionalBashrc) "
+    source $additionalBashrc
+  done
+  echo
+}
+
+loadAdditionalBashrcToConfig
