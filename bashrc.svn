@@ -1,0 +1,9 @@
+# vim: syntax=sh
+
+alias svd='svn diff > ~/diff.diff'
+alias svs='svn status -q'
+alias svu='svn update'
+alias svi='svn info'
+alias svp='svn patch'
+alias svr='svn revert'
+alias svig="svn propedit svn:ignore"
