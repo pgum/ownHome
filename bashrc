@@ -33,7 +33,7 @@ alias cp='cp -v -i'
 alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
 shopt -s autocd
-hdd='/i-data/md0'
+
 alias basr='. ~/.bashrc'
 export PS1="\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
 
@@ -44,8 +44,6 @@ export PATH=./:$PATH
 export GREP_OPTIONS='--color=auto'
 
 alias dea="deactivate"
-
-alias svig="svn propedit svn:ignore"
 
 loadAdditionalBashrcToConfig(){
   echo -n "Loaded config: "
