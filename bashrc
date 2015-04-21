@@ -1,8 +1,6 @@
 echo "$0 WGRANY!"
-
-if [ -f /etc/bashrc ]; then
-        . /etc/bashrc
-fi
+#if global config exist, include that first
+if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
 
 #<C-s> putty freezer fix
 [[ $- == *i* ]] && stty -ixany
