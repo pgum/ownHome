@@ -34,7 +34,6 @@ alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
 shopt -s autocd
 
-alias basr='. ~/.bashrc'
 export PS1="\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
 
 # Make sure that there is no logging of the session.
