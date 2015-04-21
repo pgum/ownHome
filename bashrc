@@ -9,7 +9,7 @@ if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
 
 fgp()
 {
-    find . -name *$1* -exec grep -l "$2" {} \;
+    find . -name \*$2 -exec grep -l "$1" {} \;
 }
 
 
