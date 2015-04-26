@@ -1,17 +1,13 @@
-echo "$0 WGRANY!"
 #if global config exist, include that first
 if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
-
 #<C-s> putty freezer fix
 [[ $- == *i* ]] && stty -ixany
 [[ $- == *i* ]] && stty ixoff -ixon
-
 
 fgp()
 {
     find . -name \*$2 -exec grep -l "$1" {} \;
 }
-
 
 ##PUTTY
 alias clr="clear && printf '\033[3J'"
@@ -20,7 +16,6 @@ alias tarit='tar -cvf '
 alias untarit='tar -xf '
 
 alias h='history | grep $1'
-alias top-commands='history | awk "{print $2}" | awk "BEGIN {FS="|"} {print $1}" |sort|uniq -c | sort -rn | head -10'
 
 alias ls='ls -A --color=always'
 alias ll='ls -l'
@@ -43,11 +38,16 @@ export GREP_OPTIONS='--color=auto'
 alias dea="deactivate"
 
 loadAdditionalBashrcToConfig(){
-  echo -n "Loaded config: "
-  for additionalBashrc in ~/.bashrc.*; do
-    echo -n "$(basename $additionalBashrc) "
-    source $additionalBashrc
-  done
+  local color_switch="\033["
+  local lgreen="${color_switch}1;32m"
+  local nocolor="${color_switch}0m"
+  echo -ne "${lgreen}Loaded config: ${nocolor}"
+  for additionalBashrc in ~/.Bashrc/[0-9]*
+    do
+      configFilename=$(basename ${additionalBashrc})
+      echo -n "${configFilename#*.} "
+      source $additionalBashrc
+    done
   echo
 }
 

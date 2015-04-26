@@ -1,8 +1,8 @@
 set nocompatible
-source ~/.vimrc.vundle  " Plugin manager configurations
-source ~/.vimrc.func    " Functions library
-source ~/.vimrc.plugins " Plugins config
-source ~/.vimrc.map     " Key bindings
+source ~/.Vimrc/vimrc.vundle  " Plugin manager configurations
+source ~/.Vimrc/vimrc.func    " Functions library
+source ~/.Vimrc/vimrc.plugins " Plugins config
+source ~/.Vimrc/vimrc.map     " Key bindings
 "
 filetype plugin on
 set modeline
