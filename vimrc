@@ -1,9 +1,10 @@
 set nocompatible
-source ~/.Vimrc/vimrc.vundle  " Plugin manager configurations
-source ~/.Vimrc/vimrc.func    " Functions library
-source ~/.Vimrc/vimrc.plugins " Plugins config
-source ~/.Vimrc/vimrc.map     " Key bindings
-"
+
+"Source all vimrc.<module> in .Vimrc directory
+for AdditionalVimrc in split(globpath("~/.Vimrc/", "vimrc.*"), '\n')
+  execute('source '.AdditionalVimrc)
+endfor
+
 filetype plugin on
 set modeline
 
