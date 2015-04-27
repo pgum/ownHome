@@ -29,7 +29,6 @@ operationNotDone(){
 }
 pressReturnToContinue(){
     echoOk "Press enter to continue..."
-    #read -rsp $"Press enter to continue...\n"
     read -rs
     echo
 }
