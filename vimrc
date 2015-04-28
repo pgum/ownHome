@@ -1,7 +1,7 @@
 set nocompatible
 
 "Source all vimrc.<module> in .Vimrc directory
-for AdditionalVimrc in split(globpath("~/.Vimrc/", "vimrc.*"), '\n')
+for AdditionalVimrc in split(globpath("~/.Vimrc/", "[0-9]*"), '\n')
   execute('source '.AdditionalVimrc)
 endfor
 
