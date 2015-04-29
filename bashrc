@@ -41,14 +41,19 @@ loadAdditionalBashrcToConfig(){
   local color_switch="\033["
   local lgreen="${color_switch}1;32m"
   local nocolor="${color_switch}0m"
-  echo -ne "${lgreen}Loaded config: ${nocolor}"
+  local splash=${1:-"-verbose"}
+  [ ! $splash = "-silent" ] && echo -ne "${lgreen}Loaded config: ${nocolor}"
   for additionalBashrc in ~/.Bashrc/[0-9]*
     do
       configFilename=$(basename ${additionalBashrc})
-      echo -n "${configFilename#*.} "
+      [ ! $splash = "-silent" ] && echo -n "${configFilename#*.} "
       source $additionalBashrc
     done
-  echo
+  [ ! $splash = "-silent" ] && echo
 }
+loadAdditionalBashrcToConfig ${1:-""}
 
-loadAdditionalBashrcToConfig
+sourceBashrc()
+{
+  [ -f ~/.Bashrc/[0-9]*$1 ] && source ~/.Bashrc/[0-9]*$1
+}
