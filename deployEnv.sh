@@ -9,4 +9,4 @@ ln -s ~/ownHome/vimrc ~/.vimrc
 ln -s ~/ownHome/bashrc ~/.bashrc
 
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim -c"PluginInstall" -c"qa"
+vim -c "PluginInstall" -c "qa"
