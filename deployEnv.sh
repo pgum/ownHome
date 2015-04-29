@@ -1,12 +1,18 @@
 #!/bin/bash
+source deployEnv.helpers
 
-configsNamePattern=ownHome/[B,V,b,v]*rc
-mkdir ~/.Bashrc ~/.Vimrc
+showInstructionsFor What-will-be-configured
 
-ln -s -t ~/.Bashrc/ ~/ownHome/Bashrc/*
-ln -s -t ~/.Vimrc/ ~/ownHome/Vimrc/*
-ln -s ~/ownHome/vimrc ~/.vimrc
-ln -s ~/ownHome/bashrc ~/.bashrc
+showInstructionsFor Config-files-file-structure
+generateConfigsLinks
 
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim -c "PluginInstall" -c "qa"
+showInstructionsFor SSH-key-generation-linux-side
+sshKeyGenerationProcedure
+
+showInstructionsFor How-to-import-created-SSH-keys-into-PuTTY
+
+showInstructionsFor Configuration-of-Vim-editor
+installVundleVimPluginManager
+updateVundlePluginInformation
+
+echoOk "Script finished"
