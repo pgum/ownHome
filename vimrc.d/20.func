@@ -74,10 +74,9 @@ command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>,
 cabbrev shell Shell
 """"""""""""""""""""""""""""""""""""""""""""""""""
 function! SearchForLocalVimrc()
-  let localVimrcFilename=".vimrc.local"
-  let PathPrefix=expand("./")
-  if filereadable(PathPrefix.localVimrcFilename)
-    execute ":so " .PathPrefix.localVimrcFilename
+  let localVimrcFullPath=expand("./").".vimrc.local"
+  if filereadable(localVimrcFullPath)
+    execute ":so " .localVimrcFullPath
   endif
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""
