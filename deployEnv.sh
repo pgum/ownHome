@@ -14,9 +14,10 @@ if confirm "Do you want to generate SSH Keys? [y/N]"
 
   showInstructionsFor How-to-import-created-SSH-keys-into-PuTTY
 fi
-
-#showInstructionsFor Configuration-of-Vim-editor
-#installVundleVimPluginManager
-#updateVundlePluginInformation
-
+if confirm "Do you want to download, install and configure vundle vim plugin manager? [y/N]"
+  then
+  showInstructionsFor Configuration-of-Vim-editor
+  installVundleVimPluginManager
+  updateVundlePluginInformation
+fi
 echoOk "Script finished"
