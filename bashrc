@@ -10,7 +10,6 @@ fgp()
 }
 
 ##PUTTY
-alias clr="clear && printf '\033[3J'"
 
 alias tarit='tar -cvf '
 alias untarit='tar -xf '
@@ -26,8 +25,6 @@ alias cp='cp -v -i'
 alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
 shopt -s autocd
-
-export PS1="\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
 
 # Make sure that there is no logging of the session.
 # Privacy issues and it was mentioned that logging makes slow the logout.
@@ -55,5 +52,6 @@ loadAdditionalBashrcToConfig ${1:-""}
 
 sourceBashrc()
 {
-  [ -f ~/.Bashrc/[0-9]*$1 ] && source ~/.Bashrc/[0-9]*$1
+  local bashrcAddons="~/.bashrc.d"
+  [ -f $bashrcAddons/[0-9]*$1 ] && source $bashrcAddons/[0-9]*$1
 }

@@ -1,0 +1,2 @@
+
+alias clr="clear && printf '\033[3J'"
