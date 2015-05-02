@@ -11,7 +11,7 @@ generateConfigLink(){
 
   local addonConfigFolder=$1.d
   [ -d $addonConfigFolder ] &&  mkdir ~/.$addonConfigFolder
-  ln -s -t ~/.$addonConfigFolder/ $scriptPath/$addonConfigFolder/[0-9]*
+  ln -s -t $scriptPath/$addonConfigFolder/ ~/.$addonConfigFolder/[0-9]*
 }
 
 generateConfigsLinks(){
