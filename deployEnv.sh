@@ -1,5 +1,5 @@
 #!/bin/bash
-source deployEnv.helpers
+source $(basename)/deployEnv.helpers
 
 showInstructionsFor What-will-be-configured
 
