@@ -1,3 +1,6 @@
 # vim: syntax=sh
-
-export PS1="\u@\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
+if [ -n $red ]
+  then tempPS1="${lcyan}\u${nocolor}@${green}\h${yellow}\W${nocolor} \\$ "
+  else tempPS1="\u@\[\e[1;32m\]\h\[\e[1;32m\]\[\e[1;34m\]\W \[\e[0m\]\\$ "
+fi
+export PS1=$tempPS1
