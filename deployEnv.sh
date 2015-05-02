@@ -1,5 +1,6 @@
 #!/bin/bash
-source $(dirname $0)/deployEnv.helpers
+scriptPath=$(dirname "$(readlink -f "$0")")
+source $scriptPath/deployEnv.helpers
 
 showInstructionsFor What-will-be-configured
 
