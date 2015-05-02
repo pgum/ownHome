@@ -26,7 +26,8 @@ installVundleVimPluginManager(){
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 }
 updateVundlePluginInformation(){
-  vim -c "PluginInstall" -c "qa"
+  vim +PluginInstall +qall
+
 }
 
 defaultSshKeyName="id_rsa"
