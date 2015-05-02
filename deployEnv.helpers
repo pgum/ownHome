@@ -1,15 +1,17 @@
 # vim: syntax=sh
 ## Common script methods
-source ./bashrc.d/*.ui.framework
+scriptPath=$(dirname "$(readlink -f "$0")")
+
+source $scriptPath/bashrc.d/*.ui.framework
 
 generateConfigLink(){
   local mainConfig=$1
-  [ ! -f ./$1 ] && return
-  ln -s ./$mainConfig ~/.$mainConfig
+  [ ! -f $scriptPath/$1 ] && return
+  ln -s $scriptPath/$mainConfig ~/.$mainConfig
 
   local addonConfigFolder=$1.d
   [ -d $addonConfigFolder ] &&  mkdir ~/.$addonConfigFolder
-  ln -s -t ~/.$addonConfigFolder/ ./$addonConfigFolder/[0-9]*
+  ln -s -t ~/.$addonConfigFolder/ $scriptPath/$addonConfigFolder/[0-9]*
 }
 
 generateConfigsLinks(){
@@ -26,7 +28,6 @@ updateVundlePluginInformation(){
 
 defaultSshKeyName="id_rsa"
 defaultSshKeyPath="~/.ssh"
-sshKeyNameForPutty="copyThisToPuTTY.pub"
 
 isAlreadyFileNamedLikeDefaultSshKey(){
   [ ! -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
@@ -115,8 +116,7 @@ This step consist of two actions: getting Vundle from git repo, update Vundle pl
   How-to-import-created-SSH-keys-into-PuTTY)
     echo -ne \
     "After keys are made, copy $sshKeyPath/$sshKeyName.pub (if you followed defaut procedure) file to your Windows machine.
-Run PuTTYgen tool, load $sshKeyNameForPutty file.
-A dialog box will pop up telling you how to save key in PuTTY\'s format.
+Run PuTTYgen tool, load copied file. A dialog box will pop up telling you how to save key in PuTTY\'s format.
 ";;
   *)
 ;;
