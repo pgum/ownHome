@@ -13,9 +13,12 @@ generateConfigLink(){
   [ ! -d $addonConfigFolder ] &&  mkdir ~/.$addonConfigFolder
   ln -s $scriptPath/$addonConfigFolder/[0-9]* ~/.$addonConfigFolder/
 }
-
+createFallbackDotProfileLinkToBashrc(){
+  ln -s ~/.bashrc ~/.profile
+}
 generateConfigsLinks(){
   generateConfigLink bashrc
+  createFallbackDotProfileLinkToBashrc
   generateConfigLink vimrc
 }
 
