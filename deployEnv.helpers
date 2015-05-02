@@ -52,7 +52,6 @@ sshKeyGenerationProcedure(){
     then
     manualSshKeyProcedure
   else
-    then
     defaultSshKeyProcedure
   fi
 }
