@@ -20,6 +20,7 @@ generateConfigsLinks(){
   generateConfigLink bashrc
   createFallbackDotProfileLinkToBashrc
   generateConfigLink vimrc
+  generateConfigLink screenrc
 }
 
 installVundleVimPluginManager(){

@@ -1,0 +1,11 @@
+term screen-256color
+shell bash
+screen -t 'root@ditto' ssh root@localhost
+screen -t 'root@athena' ssh root@192.168.0.31
+screen -t 'killme@ditto' bash
+autodetach on
+altscreen on
+hardstatus off
+#hardstatus alwayslastline '%{= G}[ %{G}%H %{g}][%= %{= w}%?%-Lw%?%{= R}%n*%f %t%?%{= R}(%u)%?%{= w}%+Lw%?%= %{= g}][ %{y}Load: %l %{g}][%{B}%Y-%m-%d %{W}%c:%s %{g}]'
+hardstatus alwayslastline "%{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
+
