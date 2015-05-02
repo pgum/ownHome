@@ -1,2 +1,2 @@
-
+# vim: syntax=sh
 alias clr="clear && printf '\033[3J'"
