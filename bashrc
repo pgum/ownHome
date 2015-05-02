@@ -40,7 +40,7 @@ loadAdditionalBashrcToConfig(){
   local nocolor="${color_switch}0m"
   local splash=${1:-"-verbose"}
   [ ! $splash = "-silent" ] && echo -ne "${lgreen}Loaded config: ${nocolor}"
-  for additionalBashrc in ~/.Bashrc/[0-9]*
+  for additionalBashrc in ~/.bashrc.d/[0-9]*
     do
       configFilename=$(basename ${additionalBashrc})
       [ ! $splash = "-silent" ] && echo -n "${configFilename#*.} "
