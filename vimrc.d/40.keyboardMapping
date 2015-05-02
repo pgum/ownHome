@@ -1,0 +1,10 @@
+" vim:syntax=vim
+let mapleader = "-"
+nnoremap <leader>f :w !diff - %<cr>
+nnoremap <leader> <F9> :TagbarToggle<CR>
+
+nnoremap <TAB> :b 
+map <F4> :so %<CR>
+map <F12> :call ToggleColorColumn()<CR>
+map <F9> :call NumberToggle()<CR>
+

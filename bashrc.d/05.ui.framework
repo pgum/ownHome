@@ -1,0 +1,41 @@
+# vim: syntax=sh
+color_switch="\033["
+color_error="${color_switch}0;31m"
+color_warn="${color_switch}1;33m"
+color_info="${color_switch}0;36m"
+color_ok="${color_switch}0;32m"
+stop_color="${color_switch}0m"
+
+##Message output format
+echoError(){
+    echo -e "${color_error}$@${stop_color}"
+}
+echoWarn(){
+    echo -e "${color_warn}$@${stop_color}"
+}
+echoInfo(){
+    echo -e "${color_info}$@${stop_color}"
+}
+echoOk(){
+    echo -e "${color_ok}$@${stop_color}"
+}
+
+##User interaction
+operationDone(){
+    echoOk "Done"
+}
+operationNotDone(){
+    echoError "Not done"
+}
+pressReturnToContinue(){
+    echoOk "Press enter to continue..."
+    read -rs
+    echo
+}
+confirm(){
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case $response in
+        [yY][eE][sS]|[yY]) true ;;
+        *)  false ;;
+    esac
+}

@@ -1,0 +1,4 @@
+# vim: syntax=sh
+
+## Fast bashrc reload
+alias basr='. ~/.bashrc'

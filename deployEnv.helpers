@@ -1,14 +1,15 @@
 # vim: syntax=sh
 ## Common script methods
-source ~/ownHome/Bashrc/*.ui.framework
+source ./bashrc.d/*.ui.framework
 
 generateConfigLink(){
-  [ ! -f ~/ownHome/$1 ] && return
-  mainConfig=$1
-  configFolder=${1~}
-  mkdir ~/.$configFolder
-  ln -s -t ~/.$configFolder/ ~/ownHome/$configFolder/[0-9]*
-  ln -s ~/ownHome/$mainConfig ~/.$mainConfig
+  local mainConfig=$1
+  [ ! -f ./$1 ] && return
+  ln -s ./$mainConfig ~/.$mainConfig
+
+  local addonConfigFolder=$1.d
+  [ -d $addonConfigFolder ] &&  mkdir ~/.$addonConfigFolder
+  ln -s -t ~/.$addonConfigFolder/ ./$addonConfigFolder/[0-9]*
 }
 
 generateConfigsLinks(){
@@ -23,16 +24,36 @@ updateVundlePluginInformation(){
   vim -c "PluginInstall" -c "qa"
 }
 
-sshKeyName="id_rsa"
-sshKeyPath="~/.ssh"
+defaultSshKeyName="id_rsa"
+defaultSshKeyPath="~/.ssh"
 sshKeyNameForPutty="copyThisToPuTTY.pub"
-sshKeyGenerationProcedure(){
-  [ ! -f $sshKeyPath/$sshKeyName ] && echoWarn "File $sshKeyPath/$sshKeyName already exist... Manual SSH generation required!" && return
-  ssh-keygen -f $sshKeyPath/$sshKeyName -N ""
-  echoInfo "Copying $sshKeyName.pub to home directory to "
-  cp $sshKeyPath/$sshKeyName.pub ~/$sshKeyNameForPutty
+
+isAlreadyFileNamedLikeDefaultSshKey(){
+  [ ! -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
+}
+manualSshKeyProcedure(){
+  ssh-keygen
+  echoInfo "Copy your public key to authorized keys for $USER"
+  echoInfo "eg. ssh-copy-id -i $sshKeyPath/$sshKeyName.pub  $USER@localhost"
+}
+defaultSshKeyProcedure(){
+  ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
   echoInfo "Copying $sshKeyName.pub key to authorized keys for $USER"
   ssh-copy-id -i $sshKeyPath/$sshKeyName.pub  $USER@localhost
+}
+
+sshKeyGenerationProcedure(){
+  if isAlreadyFileNamedLikeDefaultSshKey
+    then
+    echoWarn "File $defaultSshKeyPath/$defaultSshKeyName already exist... Manual SSH generation required!"
+    manualSshKeyProcedure
+  elif [ confirm "Do you want to generate SSH key with custom settings? [y/N]" ]
+    then
+    manualSshKeyProcedure
+  else
+    then
+    defaultSshKeyProcedure
+  fi
 }
 
 showInstructionsFor(){
@@ -81,7 +102,10 @@ public keys. Keys are made with options:
 private key: $sshKeyName
 public key: $sshKeyName.pub
 No passphrase protection
+
+If you want, you can enter your own settings. Remember how you named your public key, and your passphrase!
 ";;
+
   Configuration-of-Vim-editor)
     echo -ne \
     "Vimrc files are configuration files for Vim Text Editor.
@@ -90,7 +114,7 @@ This step consist of two actions: getting Vundle from git repo, update Vundle pl
 ";;
   How-to-import-created-SSH-keys-into-PuTTY)
     echo -ne \
-    "After keys are made, move /home/$USER/$sshKeyNameForPutty file to your Windows machine.
+    "After keys are made, copy $sshKeyPath/$sshKeyName.pub (if you followed defaut procedure) file to your Windows machine.
 Run PuTTYgen tool, load $sshKeyNameForPutty file.
 A dialog box will pop up telling you how to save key in PuTTY\'s format.
 ";;
