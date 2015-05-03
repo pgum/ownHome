@@ -2,7 +2,7 @@
 ## Common script methods
 scriptPath=$(dirname "$(readlink -f "$0")")
 
-source $scriptPath/bashrc.d/*.ui.framework
+source $scriptPath/bashrc.d/*.basic.ui
 
 generateConfigLink(){
   local mainConfig=$1
