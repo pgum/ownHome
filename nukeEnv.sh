@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf .[b,v]* .profile
+rm -rf .[b,v]* .profile .screenrc
