@@ -1,8 +1,5 @@
 term screen-256color
 shell bash
-screen -t 'root@ditto' ssh root@localhost
-screen -t 'root@athena' ssh root@192.168.0.31
-screen -t 'killme@ditto' bash
 autodetach on
 altscreen on
 hardstatus off
