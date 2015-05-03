@@ -14,6 +14,8 @@ alias cp='cp -v -i'
 alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
 
+alias basr=". ~/.bashrc"
+
 fgp(){
   find . -name \*$2 -exec grep -l "$1" {} \;
 }
