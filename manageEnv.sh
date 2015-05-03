@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.bashrc -silent
+source ~/.bashrc
 scriptPath=$(dirname "$(readlink -f "$0")")
 listPluginsInFolder(){
   [ -z $1 ] && return
