@@ -8,7 +8,6 @@ alias h='history | grep $1'
 
 alias ls='ls -A --color=always'
 alias ll='ls -l'
-shopt -s autocd
 
 alias mv='mv -v -i'
 alias cp='cp -v -i'
@@ -22,16 +21,19 @@ fgp(){
 unset HISTFILE          #Privacy issues and it was mentioned that logging makes slow the logout.
 export PATH=./:$PATH
 export GREP_OPTIONS='--color=auto'
-
+loadedAddonConfigs=""
 loadAdditionalBashrcToConfig(){
-  local loadedAddonConfigs=""
   for additionalBashrc in ~/.bashrc.d/[0-9]*
     do
     configFilename=$(basename ${additionalBashrc})
     loadedAddonConfigs="${loadedAddonConfigs} ${configFilename#*.}"
     source $additionalBashrc
   done
-  local splash=${1:-"-verbose"}
-  [ ! $splash = "-silent" ] && echo "Loaded config:$loadedAddonConfigs"
+  export loadedAddonConfigs=$loadedAddonConfigs
 }
-loadAdditionalBashrcToConfig ${1:-""}
+
+listAddons(){
+  echo "Loaded addons:$loadedAddonConfigs"
+}
+
+loadAdditionalBashrcToConfig

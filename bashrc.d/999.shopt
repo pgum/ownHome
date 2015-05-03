@@ -1,0 +1,2 @@
+# vim: syntax=sh
+shopt -s autocd

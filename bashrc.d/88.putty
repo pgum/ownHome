@@ -2,6 +2,7 @@
 alias clr="clear && printf '\033[3J'"
 
 #<C-s> putty freezer fix
-[[ $- == *i* ]] && stty -ixany
-[[ $- == *i* ]] && stty ixoff -ixon
+case $- in
+  *i*) stty -ixany && stty ixoff -ixon ;;
+esac
 
