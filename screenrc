@@ -5,10 +5,6 @@ altscreen on
 hardstatus on
 hardstatus alwayslastline
 hardstatus string "%w%=%m/%d %c"
-#hardstatus off
-#hardstatus alwayslastline '%{= G}[ %{G}%H %{g}][%= %{= w}%?%-Lw%?%{= R}%n*%f %t%?%{= R}(%u)%?%{= w}%+Lw%?%= %{= g}][ %{y}Load: %l %{g}][%{B}%Y-%m-%d %{W}%c:%s %{g}]'
-#hardstatus alwayslastline "%{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
 vbell off
-bell_msg '^GBell in window %n'
-#The ^G (CTRL G) is the key)
-#
+bell_msg '^GBell in window %n' #The ^G (CTRL G) is the key)
+
