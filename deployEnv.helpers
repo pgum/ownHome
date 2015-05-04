@@ -21,6 +21,7 @@ generateConfigsLinks(){
   createFallbackDotProfileLinkToBashrc
   generateConfigLink vimrc
   generateConfigLink screenrc
+  generateConfigLink colordiffrc
 }
 
 installVundleVimPluginManager(){
