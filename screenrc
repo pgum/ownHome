@@ -8,3 +8,4 @@ hardstatus string "%w%=%m/%d %c"
 vbell off
 bell_msg '^GBell in window %n' #The ^G (CTRL G) is the key)
 
+bind X remove
