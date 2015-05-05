@@ -10,7 +10,7 @@ generateConfigLink(){
   ln -s $scriptPath/$mainConfig ~/.$mainConfig
 
   local addonConfigFolder=$1.d
-  [ ! -d $addonConfigFolder ] &&  mkdir ~/.$addonConfigFolder
+  [ ! -d $addonConfigFolder ] && [ -d $scriptPath/$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
   ln -s $scriptPath/$addonConfigFolder/[0-9]* ~/.$addonConfigFolder/
 }
 createFallbackDotProfileLinkToBashrc(){
