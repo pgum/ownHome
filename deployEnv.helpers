@@ -16,12 +16,26 @@ generateConfigLink(){
 createFallbackDotProfileLinkToBashrc(){
   ln -s ~/.bashrc ~/.profile
 }
+listBundledConfigs(){
+  configsList=""
+  for configFile in $scriptPath/*rc
+    do
+    configsList="$configsList $(basename $configFile)"
+    done
+  echo $configsList
+}
 generateConfigsLinks(){
-  generateConfigLink bashrc
+  for configToLink in $(listBundledConfigs)
+    do
+    generateConfigLink $configToLink
+  done
   createFallbackDotProfileLinkToBashrc
+<<<<<<< HEAD
+=======
   generateConfigLink vimrc
   generateConfigLink screenrc
   generateConfigLink colordiffrc
+>>>>>>> 474909ea32d2f48ab9138cfa18d7e4cf0b90ea76
 }
 
 installVundleVimPluginManager(){
