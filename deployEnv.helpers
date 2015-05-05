@@ -30,12 +30,6 @@ generateConfigsLinks(){
     generateConfigLink $configToLink
   done
   createFallbackDotProfileLinkToBashrc
-<<<<<<< HEAD
-=======
-  generateConfigLink vimrc
-  generateConfigLink screenrc
-  generateConfigLink colordiffrc
->>>>>>> 474909ea32d2f48ab9138cfa18d7e4cf0b90ea76
 }
 
 installVundleVimPluginManager(){
