@@ -1,21 +1,3 @@
 # vim: syntax=sh
-color_switch="\033["
 
-black="${color_switch}0;30m"
-red="${color_switch}0;31m"
-green="${color_switch}0;32m"
-brown="${color_switch}1;33m"
-blue="${color_switch}0;34m"
-purple="${color_switch}0;35m"
-cyan="${color_switch}0;36m"
-lgray="${color_switch}0;37m"
 
-dgray="${color_switch}1;30m"
-lred="${color_switch}1;31m"
-lgreen="${color_switch}1;32m"
-yellow="${color_switch}1;33m"
-lblue="${color_switch}1;34m"
-lpurple="${color_switch}1;35m"
-lcyan="${color_switch}1;36m"
-white="${color_switch}1;37m"
-nocolor="${color_switch}0m"

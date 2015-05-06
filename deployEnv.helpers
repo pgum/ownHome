@@ -3,6 +3,7 @@
 scriptPath=$(dirname "$(readlink -f "$0")")
 
 source $scriptPath/bashrc.d/*.basic.ui
+source $scriptPath/deployEnv.help
 
 generateConfigLink(){
   local conn="ln -s"
@@ -53,94 +54,23 @@ defaultSshKeyPath="~/.ssh"
 isAlreadyFileNamedLikeDefaultSshKey(){
   [ ! -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
 }
-manualSshKeyProcedure(){
-  ssh-keygen
-  echoInfo "Copy your public key to authorized keys for $USER"
-  echoInfo "eg. ssh-copy-id -i $sshKeyPath/$sshKeyName.pub  $USER@localhost"
-}
-defaultSshKeyProcedure(){
+sshKeyGenerationWithDefaults(){
   ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
   echoInfo "Copying $sshKeyName.pub key to authorized keys for $USER"
-  ssh-copy-id -i $sshKeyPath/$sshKeyName.pub  $USER@localhost
+  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 }
 
 sshKeyGenerationProcedure(){
   if isAlreadyFileNamedLikeDefaultSshKey
     then
     echoWarn "File $defaultSshKeyPath/$defaultSshKeyName already exist... Manual SSH generation required!"
-    manualSshKeyProcedure
+    ssh-keygen
   elif [ confirm "Do you want to generate SSH key with custom settings? [y/N]" ]
     then
-    manualSshKeyProcedure
+    ssh-keygen
   else
-    defaultSshKeyProcedure
+    sshKeyGenerationWithDefaults
   fi
 }
 
-showInstructionsFor(){
-  echoInfo  ${1//'-'/' '}
-  case $1 in
-    What-will-be-configured)
-    echo -ne \
-    "This script is going to setup your enviroment following procedure:
-    * SSH keys generation
-    * Bash configuration,
-    * Vim plugins initialization/configuration.
-";;
-Config-files-file-structure)
-  echo -ne \
-  "In your home directory you will find .Bashrc and .Vimrc directories. Inside them are config files plugins
-that are loaded right after main .bashrc and .vimrc. Order of execution is dependant on filename. Only files
-that start with <number>.<main-name> are loaded.
-
-To make own add-on:
-  1) Add file with name following name convention into your ~/.Bashrc or ~/.Vimrc,
-  2) Fill file with your code,
-  3) After bash/vim is executed, all config add-ons are sourced and can be used,
-
-Note:
-When bash script is invoked it spawns its own bash WITHOUT sourced .bashrc
-To use functions from bash config add-ons in your own scripts (that are sourced in .bashrc)
-Use following command: $(echoWarn "source ~/.bashrc -silent")
-to source all config addons and then use where $(echoWarn "-silent") is meant to supress \"splash screen\"
-when log in occurs
-
-To stop using particular config add-on:
-  1) If it's a symlink to \"common account repository\":
-  $(echoWarn "unlink <name>")
-  2) If it's your custom config add-on:
-  Either remove (with rm) or move (with mv) from config directory OR change file name to not have digit first.
-
-To list config addons that you use:
-  1) When sourcing .bashrc without "-silent" option (i.e. type "bash") - from \"splashscreen\"
-  2) Type "ls -Al ~/.[B,V]*" - it will list files in .Bashrc adn .Vimrc folders
-  3) type manageEnv to see which add-ons are standard or custom, on or off
-";;
-  SSH-key-generation-linux-side)
-    echo -ne \
-    "SSH authorization method requires from user to generate unique pair of private and
-public keys. Keys are made with options:
-private key: $sshKeyName
-public key: $sshKeyName.pub
-No passphrase protection
-
-If you want, you can enter your own settings. Remember how you named your public key, and your passphrase!
-";;
-
-  Configuration-of-Vim-editor)
-    echo -ne \
-    "Vimrc files are configuration files for Vim Text Editor.
-When loading, .vimrc will autoload all other config files in ~/.Vimrc/vimrc.<module>
-This step consist of two actions: getting Vundle from git repo, update Vundle plugin information from vimrc files.
-";;
-  How-to-import-created-SSH-keys-into-PuTTY)
-    echo -ne \
-    "After keys are made, copy $sshKeyPath/$sshKeyName.pub (if you followed defaut procedure) file to your Windows machine.
-Run PuTTYgen tool, load copied file. A dialog box will pop up telling you how to save key in PuTTY\'s format.
-";;
-  *)
-;;
-  esac
-  pressReturnToContinue
-}
 
