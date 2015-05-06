@@ -5,18 +5,23 @@ scriptPath=$(dirname "$(readlink -f "$0")")
 source $scriptPath/bashrc.d/*.basic.ui
 
 generateConfigLink(){
+  local conn="ln -s"
   local mainConfig=$1
-  [ ! -f $scriptPath/$1 ] && return
-  ln -s $scriptPath/$mainConfig ~/.$mainConfig
+  [ ! -f $scriptPath/$mainConfig ] && return
+  [ ! -f ~/.$mainConfig ] && $conn $scriptPath/$mainConfig ~/.$mainConfig
 
   local addonConfigFolder=$1.d
   [ ! -d $scriptPath/$addonConfigFolder ] && return
-  [ -d ~/.$addonConfigFolder ] && return
-  mkdir ~/.$addonConfigFolder
-  ln -s $scriptPath/$addonConfigFolder/[0-9]* ~/.$addonConfigFolder/
+  [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
+  for addonConfig in  $scriptPath/$addonConfigFolder/[0-9]*
+    do
+    [ -f $addonConfig ] && continue
+    $conn $addonConfig ~/.$addonConfigFolder/
+    done
 }
 createFallbackDotProfileLinkToBashrc(){
-  ln -s ~/.bashrc ~/.profile
+  local conn="ln -s"
+  [ ! -f ~/.profile ] && $conn ~/.bashrc ~/.profile
 }
 listBundledConfigs(){
   configsList=""
