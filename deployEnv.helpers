@@ -6,7 +6,7 @@ source $scriptPath/bashrc.d/*.basic.ui
 source $scriptPath/deployEnv.help
 
 generateConfigLink(){
-  local conn="ln -s"
+  local conn=${2:-"ln -s"}
   local mainConfig=$1
   [ ! -f $scriptPath/$mainConfig ] && return
   [ ! -f ~/.$mainConfig ] && $conn $scriptPath/$mainConfig ~/.$mainConfig
@@ -21,7 +21,7 @@ generateConfigLink(){
     done
 }
 createFallbackDotProfileLinkToBashrc(){
-  local conn="ln -s"
+  local conn=${1:-"ln -s"}
   [ ! -f ~/.profile ] && $conn ~/.bashrc ~/.profile
 }
 listBundledConfigs(){
@@ -35,7 +35,7 @@ listBundledConfigs(){
 generateConfigsLinks(){
   for configToLink in $(listBundledConfigs)
     do
-    generateConfigLink $configToLink
+    generateConfigLink $configToLink ${1:-""}
   done
   createFallbackDotProfileLinkToBashrc
 }
