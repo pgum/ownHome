@@ -37,5 +37,15 @@ loadAdditionalBashrcToConfig(){
 listAddons(){
   echo "Loaded addons:$loadedAddonConfigs"
 }
+isSymlinkValid(){
+   cat $(readlink $1) &>> /dev/null
+}
+checkExistingSymlinksToAddonConfigs(){
+   for additionalBashrc in ~/.bashrc.d/[0-9]*
+     do
+    isSymlinkValid $additionalBashrc || unlink $additionalBashrc
+  done
+}
 
+checkExistingSymlinksToAddonConfigs
 loadAdditionalBashrcToConfig
