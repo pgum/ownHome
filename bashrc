@@ -47,5 +47,5 @@ checkExistingSymlinksToAddonConfigs(){
   done
 }
 
-checkExistingSymlinksToAddonConfigs
+#checkExistingSymlinksToAddonConfigs
 loadAdditionalBashrcToConfig
