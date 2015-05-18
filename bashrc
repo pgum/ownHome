@@ -3,7 +3,7 @@ if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
 
 alias tarit='tar -cvf '
 alias untarit='tar -xf '
-
+echo YYY
 alias h='history | grep $1'
 
 alias ls='ls -A --color=always'
