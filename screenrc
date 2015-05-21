@@ -3,9 +3,7 @@ term screen-256color
 shell bash
 autodetach on
 altscreen on
-hardstatus on
-hardstatus alwayslastline
-hardstatus string "%w%=%m/%d %c"
+
 vbell off
 bell_msg '^GBell in window %n' #The ^G (CTRL G) is the key)
 bind X remove
