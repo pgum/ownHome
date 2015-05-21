@@ -1,3 +1,4 @@
+#vim: syntax=screenrc
 term screen-256color
 shell bash
 autodetach on
