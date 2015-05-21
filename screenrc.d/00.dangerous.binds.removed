@@ -1,0 +1,13 @@
+#vim: syntax=screenrc
+
+#Remove dangerous key bindings
+# ^x worked as lockscreen
+bind ^x
+# x worked as remove (removes current split region)
+bind x
+# ^k worked as kill for current window
+bind ^k
+# L worked as login - toggles current window login state
+bind L
+# ^\ worked as quit - kill all windows and terminate screen
+bind ^\
