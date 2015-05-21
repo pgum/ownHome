@@ -1,6 +1,6 @@
 #if global config exist, include that first
 if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
-
+if [ $TERM = "putty" ] && export TERM=putty-256color
 alias tarit='tar -cvf '
 alias untarit='tar -xf '
 
