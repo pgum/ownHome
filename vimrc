@@ -1,5 +1,7 @@
 set nocompatible
 
+set t_Co=256 "set 256 colours enabled
+
 "Source all vimrc.<module> in .Vimrc directory
 for AdditionalVimrc in split(globpath("~/.vimrc.d/", "[0-9]*"), '\n')
   execute('source '.AdditionalVimrc)
