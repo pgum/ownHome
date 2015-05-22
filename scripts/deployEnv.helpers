@@ -3,7 +3,7 @@
 scriptPath=$(dirname "$(readlink -f "$0")")
 
 source $scriptPath/bashrc.d/*.basic.ui
-source $scriptPath/deployEnv.help
+source $scriptPath/scripts/deployEnv.help
 
 generateConfigLink(){
   local conn=${2:-"ln -s"}
