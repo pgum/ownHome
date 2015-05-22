@@ -1,1 +1,68 @@
+# vim: syntax=sh
 
+showInstructionsFor(){
+  echoInfo  ${1//'-'/' '}
+  case $1 in
+    What-will-be-configured)
+    echo -ne \
+    "This script is going to setup your enviroment following procedure:
+    * SSH keys generation
+    * Bash configuration,
+    * Vim plugins initialization/configuration.
+";;
+Config-files-file-structure)
+  echo -ne \
+  "In your home directory you will find .Bashrc and .Vimrc directories. Inside them are config files plugins
+that are loaded right after main .bashrc and .vimrc. Order of execution is dependant on filename. Only files
+that start with <number>.<main-name> are loaded.
+
+To make own add-on:
+  1) Add file with name following name convention into your ~/.Bashrc or ~/.Vimrc,
+  2) Fill file with your code,
+  3) After bash/vim is executed, all config add-ons are sourced and can be used,
+
+Note:
+When bash script is invoked it spawns its own bash WITHOUT sourced .bashrc
+To use functions from bash config add-ons in your own scripts (that are sourced in .bashrc)
+Use following command: ${yellow}source ~/.bashrc ${nocolor}
+
+To stop using particular config add-on:
+  1) If it's a symlink to \"common account repository\":
+  ${yellow}unlink <name>${nocolor}
+  2) If it's your custom config add-on:
+  Just change its name to not starting with digit, or either remove (with rm) or move (with mv) it from directory
+
+To list config addons that you use with config use:
+  ${yellow}listAddons [config=\"bashrc\"]${nocolor}
+"
+ ;;
+  SSH-key-generation-linux-side)
+    echo -ne \
+    "SSH authorization method requires from user to generate unique pair of private and
+public keys. Keys are made with options:
+private key: id_rsa
+public key: id_rsa.pub
+No passphrase protection
+
+If you want, you can enter your own settings. Remember how you named your public key, and your passphrase!
+
+Add your public key to authorized keys to use your private key as authentication method to your account.
+${yellow}cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys${nocolor}
+"
+;;
+  How-to-import-created-SSH-keys-into-PuTTY)
+    echo -ne \
+    "After keys are made, copy ~/.ssh/id_rsa.pub (if you followed defaut procedure) file to your Windows machine.
+Run PuTTYgen tool, load copied file. A dialog box will pop up telling you how to save key in PuTTY's format.
+";;
+  Configuration-of-Vim-editor)
+    echo -ne \
+    "Vimrc files are configuration files for Vim Text Editor.
+When loading, .vimrc will autoload all other config files in ~/.Vimrc/vimrc.<module>
+This step consist of two actions: getting Vundle from git repo, update Vundle plugin information from vimrc files.
+";;
+  *)
+;;
+  esac
+  pressReturnToContinue
+}
