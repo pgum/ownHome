@@ -3,7 +3,7 @@
 if [ -z $ohNOCOLOR ]
   then
   color_begin="\033["
-  color_end="\]"
+  #color_end="\]"
 
   black="${color_begin}0;30m${color_end}"
   red="${color_begin}0;31m${color_end}"
