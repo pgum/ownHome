@@ -10,9 +10,9 @@ defscrollback 10000
 nonblock on               # Do not block when a program freezes.
 startup_message off       # Do not display the copyright page.
 
-attrcolor b ".I"
-termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E38;5;%dm'
-defbce "on"
+#attrcolor b ".I"
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E38;5;%dm'
+#defbce "on"
 
 #screen doesn't operate with bash expansion
 source .screenrc.d/00.dangerous.binds.removed
