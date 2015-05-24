@@ -22,6 +22,33 @@ generateConfigLink(){
     $($conn $addonConfig ~/.$addonConfigFolder/)
     done
 }
+checkAndMakeHomeBin(){
+  [ ! -d ~/bin ] && mkdir -p ~/bin
+}
+
+installGNUScreenWithVerticalSplit(){
+  checkAndMakeHomeBin
+  pushd ~/bin
+  git clone git://git.savannah.gnu.org/screen.git screen-src
+  pushd screen-src
+  ./autogen.sh
+  ./configure --enable-colors256
+  make
+  popd
+  ln -s screen-src/screen
+  popd
+}
+installColordiffFromGithub(){
+  checkAndMakeHomeBin
+  pushd ~/bin
+  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl
+  mv colordiff.pl colordiff
+  popd
+}
+installUtilities(){
+  installGNUScreenWithVerticalSplit
+  installColordiffFromGithub
+}
 createFallbackDotProfileLinkToBashrc(){
   local conn=${1:-"ln -s"}
   [ ! -f ~/.profile ] && $conn ~/.bashrc ~/.profile
