@@ -2,7 +2,6 @@ set nocompatible
 
 set t_Co=256 "set 256 colours enabled
 
-"Source all vimrc.<module> in .Vimrc directory
 for AdditionalVimrc in split(globpath("~/.vimrc.d/", "[0-9]*"), '\n')
   execute('source '.AdditionalVimrc)
 endfor
@@ -26,9 +25,9 @@ set expandtab
 set list listchars=tab:\.\ ,trail:>
 
 set showmatch       " matching brackets
-set ruler           "show the cursor position
-set laststatus=2    " zawsze pokazuj linie statusu
-set notagbsearch    " dodaje mozliwosc logow bez szukania /dzieki temu nie ma errora: E432: Tags file not sorted: tags ani E257
+set ruler           " show the cursor position
+set laststatus=2    " always show statusline
+set notagbsearch    " fix for E432: Tags file not sorted: tags and for E257
 
 set switchbuf=usetab
 set hidden
@@ -39,12 +38,12 @@ set ignorecase
 set smartcase
 set colorcolumn=120
 
-" zaznacz biale znaki na koncach linii
+" show trailing whitespace
 autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
 autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 highlight EOLWS ctermbg=red
 
-" szukaj lokalnego pliku vimrc w katalogu otwieranego pliku
+" look for local vimrc
 autocmd BufReadPre *.[ch]pp call SearchForLocalVimrc()
   " Disable auto popup, use <Tab> to autocomplete
 let g:clang_complete_auto = 0
