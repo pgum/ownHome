@@ -51,10 +51,10 @@ updateVundlePluginInformation(){
 }
 
 defaultSshKeyName="id_rsa"
-defaultSshKeyPath="~/.ssh"
+defaultSshKeyPath="$HOME/.ssh"
 
 isAlreadyFileNamedLikeDefaultSshKey(){
-  [ ! -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
+  [ -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
 }
 sshKeyGenerationWithDefaults(){
   ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
