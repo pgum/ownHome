@@ -1,5 +1,5 @@
 # vim: syntax=sh
-if [ -n $ohNOCOLOR ]
+if [ ! -n $ohNOCOLOR ]
   then tempPS1="\u@\h:\W \\$ "
   else tempPS1="${lcyan}\u${nocolor}@${green}\h${yellow}\W${nocolor} \\$ "
 fi
