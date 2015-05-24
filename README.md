@@ -14,3 +14,7 @@ Have fun :)
 * Give more informations when deployEnv
 * Create better installer scripts - use `make` maybe? 
 * constantly add new things
+
+# Speed
+Virtual machine @ 2cores, 4gb ram: `real    1m49.771s`  
+Raspberry Pi B+ @ 1core, 512mb ram: `real    9m43.724s` 
