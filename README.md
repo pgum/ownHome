@@ -7,3 +7,10 @@ To install:
   
   
 Have fun :)
+
+# TODO
+* Separate deployment scripts from dotfiles
+* Create update system
+* Give more informations when deployEnv
+* Create better installer scripts - use `make` maybe? 
+* constantly add new things
