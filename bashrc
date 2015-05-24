@@ -49,3 +49,4 @@ checkExistingSymlinksToAddonConfigs(){
 
 #checkExistingSymlinksToAddonConfigs
 loadAdditionalBashrcToConfig
+export TERM=xterm-256color

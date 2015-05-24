@@ -1,5 +1,4 @@
 #vim: syntax=screenrc
-term screen-256color
 shell bash
 autodetach on
 altscreen on
@@ -18,3 +17,4 @@ defbce "on"
 #screen doesn't operate with bash expansion
 source .screenrc.d/00.dangerous.binds.removed
 source .screenrc.mine
+term screen-256color
