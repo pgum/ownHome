@@ -10,7 +10,7 @@ generateConfigLink(){
   local mainConfig=$1
   [ ! -f $scriptPath/$mainConfig ] && return
   [ ! -f ~/.$mainConfig ] && $conn $scriptPath/$mainConfig ~/.$mainConfig
-  
+
   local addonConfigFolder=$1.d
   [ ! -d $scriptPath/$addonConfigFolder ] && return
   [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
@@ -55,6 +55,7 @@ listBundledConfigs(){
     do
     configsList="$configsList $(basename $configFile)"
     done
+  configsList="$configsList gitconfig"
   echo $configsList
 }
 generateConfigsLinks(){
