@@ -1,2 +1,3 @@
 #!/bin/bash
-rm -rf .bash* .vim* .profile .screenrc* .colordiffrc
+unlink
+rm -rf .bashrc* .vimrc* .profile .screenrc* .colordiffrc
