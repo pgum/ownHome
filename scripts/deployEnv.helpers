@@ -69,8 +69,6 @@ sshKeyGenerationProcedure(){
     ssh-keygen
   elif [ confirm "Do you want to generate SSH key with custom settings? [y/N]" ]
     then
-    ssh-keygen
-  else
     sshKeyGenerationWithDefaults
   fi
 }
