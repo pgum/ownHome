@@ -29,10 +29,10 @@ checkAndMakeHomeBin(){
 installGNUScreenWithVerticalSplit(){
   checkAndMakeHomeBin
   git clone git://git.savannah.gnu.org/screen.git ~/bin/screen-src
-  ~/bin/screen-src/autogen.sh
-  ~/bin/screen-src/configure --enable-colors256
-  make -C ~/bin/screen-src
-  ln -s i~/bin/screen-src/screen ~/bin/screen
+  ~/bin/screen-src/src/autogen.sh
+  ~/bin/screen-src/src/configure --enable-colors256
+  make -C ~/bin/screen-src/src
+  ln -s i~/bin/screen-src/src/screen ~/bin/screen
 }
 installColordiffFromGithub(){
   checkAndMakeHomeBin
