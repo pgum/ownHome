@@ -1,6 +1,7 @@
 #!/bin/bash
 scriptPath=$(dirname "$(readlink -f "$0")")
 source $scriptPath/scripts/deployEnv.helpers
+#Autodeploy doesnt generate SSH keys!
 installUtilities
 generateConfigsLinks
 installVundleVimPluginManager
