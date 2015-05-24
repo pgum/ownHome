@@ -28,22 +28,15 @@ checkAndMakeHomeBin(){
 
 installGNUScreenWithVerticalSplit(){
   checkAndMakeHomeBin
-  pushd ~/bin
-  git clone git://git.savannah.gnu.org/screen.git screen-src
-  pushd screen-src
-  ./autogen.sh
-  ./configure --enable-colors256
-  make
-  popd
-  ln -s screen-src/screen
-  popd
+  git clone git://git.savannah.gnu.org/screen.git ~/bin/screen-src
+  ~/bin/screen-src/autogen.sh
+  ~/bin/screen-src/configure --enable-colors256
+  make -C ~/bin/screen-src
+  ln -s i~/bin/screen-src/screen ~/bin/screen
 }
 installColordiffFromGithub(){
   checkAndMakeHomeBin
-  pushd ~/bin
-  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl
-  mv colordiff.pl colordiff
-  popd
+  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
 }
 installUtilities(){
   installGNUScreenWithVerticalSplit
