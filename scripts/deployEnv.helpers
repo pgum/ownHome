@@ -55,7 +55,7 @@ listBundledConfigs(){
     do
     configsList="$configsList $(basename $configFile)"
     done
-  configsList="$configsList gitconfig"
+  [ -f $scriptPath/gitconfig ] && configsList="$configsList gitconfig"
   echo $configsList
 }
 generateConfigsLinks(){
