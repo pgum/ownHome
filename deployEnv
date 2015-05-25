@@ -3,9 +3,10 @@ scriptPath=$(dirname "$(readlink -f "$0")")
 source $scriptPath/scripts/deployEnv.helpers
 
 showInstructionsFor What-will-be-configured
-installUtilities
+
 showInstructionsFor Config-files-file-structure
 generateConfigsLinks
+installUtilities
 showInstructionsFor SSH-key-generation-linux-side
 if confirm "Do you want to generate SSH Keys? [y/N]"
   then
