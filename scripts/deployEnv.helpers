@@ -27,15 +27,16 @@ checkAndMakeHomeBin(){
 }
 
 installGNUScreenWithVerticalSplit(){
-  checkAndMakeHomeBin
-  git clone git://git.savannah.gnu.org/screen.git ~/bin/screen-src
-  autoreconf ~/bin/screen-src/src/
-  ~/bin/screen-src/src/configure --enable-colors256
-  make
+  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
+  tar -xf ~/screen-4.2.1.tar.gz
+  mv ~/screen-4.2.1 ~/bin/screen-src
+  autoreconf ~/bin/screen-src
+  ~/bin/screen-src/configure --enable-colors256
+  make -C ~/bin/screen-src
   rm -r doc
-  cp screen ~/bin/
-  make clean
-  rm -f config.h config.log config.status  Makefile
+  cp ~/bin/screen-src/screen ~/bin/
+  make clean -C ~/bin/screen-src
+  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
 }
 installAckGrep(){
   curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
@@ -47,11 +48,11 @@ installClc(){
   echo "clear && printf '\033[3J'" >> ~/bin/clc
 }
 installColordiffFromGithub(){
-  checkAndMakeHomeBin
   wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
   chmod +x ~/bin/colordiff
 }
 installUtilities(){
+  checkAndMakeHomeBin
   installGNUScreenWithVerticalSplit
   installColordiffFromGithub
   installAckGrep
