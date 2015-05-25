@@ -40,6 +40,12 @@ installGNUScreenWithVerticalSplit(){
 installAckGrep(){
   curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
 }
+installClc(){
+  touch ~/bin/clc
+  chmod +x ~/bin/clc
+  echo "#!/bin/bash" >> ~/bin/clc
+  echo "clear && printf '\033[3J'" >> ~/bin/clc
+}
 installColordiffFromGithub(){
   checkAndMakeHomeBin
   wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
@@ -49,6 +55,7 @@ installUtilities(){
   installGNUScreenWithVerticalSplit
   installColordiffFromGithub
   installAckGrep
+  installClc
 }
 createFallbackDotProfileLinkToBashrc(){
   local conn=${1:-"ln -s"}
