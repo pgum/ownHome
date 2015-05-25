@@ -69,8 +69,8 @@ listBundledConfigs(){
     done
   [ -f $scriptPath/gitconfig ] && configsList="$configsList gitconfig"
   #fill git user and email
-  git config --global user.name="$(finger $USER | grep Name | awk '{print $4 " " $5}' | sed 's/Name=//')"
-  git config --global user.email=$(finger $USER | grep email | awk '{print $2}' | sed 's/email=//')
+  git config --global user.name "$(finger $USER | grep Name | awk '{print $4 " " $5}' | sed 's/Name=//')"
+  git config --global user.email $(finger $USER | grep email | awk '{print $2}' | sed 's/email=//')
   echo $configsList
 }
 generateConfigsLinks(){
