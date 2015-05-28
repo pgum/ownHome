@@ -9,7 +9,8 @@ generateConfigLink(){
   local conn=${2:-"ln -s"}
   local mainConfig=$1
   [ ! -f $scriptPath/$mainConfig ] && return
-  [ ! -f ~/.$mainConfig ] && $conn $scriptPath/$mainConfig ~/.$mainConfig
+  [ -f ~/.$mainConfig ] && [ "$(readlink ~/.$mainConfig)" ~= "$scriptPath" ] && mv ~/.$mainConfig ~/.$mainConfig.backup
+  $conn $scriptPath/$mainConfig ~/.$mainConfig
 
   local addonConfigFolder=$1.d
   [ ! -d $scriptPath/$addonConfigFolder ] && return
