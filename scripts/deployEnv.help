@@ -67,5 +67,4 @@ This step consist of two actions: getting Vundle from git repo, update Vundle pl
   *)
 ;;
   esac
-  pressReturnToContinue
 }

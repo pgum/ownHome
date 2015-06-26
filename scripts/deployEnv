@@ -1,22 +1,41 @@
 #!/bin/bash
-scriptPath=$(dirname "$(readlink -f "$0")")
-source $scriptPath/scripts/deployEnv.helpers
+export ohREPOPATH=$(dirname $(dirname "$(readlink -f "$0")"))
+scriptPath=$ohREPOPATH/scripts
+echo oh: $ohREPOPATH
+echo sP: $scriptPath
+source $scriptPath/deployEnv.helpers
 
-showInstructionsFor What-will-be-configured
+configurationType=${1:-"manual"}
+[ ! $configurationType = "auto" ] && echo $configurationType
 
+pressToContinue(){
+[ ! $configurationType = "auto" ] && pressReturnToContinue
+}
+
+
+source $scriptPath/deployEnv.help
+
+[ ! $configurationType = "auto" ] && showInstructionsFor What-will-be-configured && \
 showInstructionsFor Config-files-file-structure
+
 generateConfigsLinks
 installUtilities
-showInstructionsFor SSH-key-generation-linux-side
+
+[ ! $configurationType = "auto" ] && \
+showInstructionsFor SSH-key-generation-linux-side && \
 if confirm "Do you want to generate SSH Keys? [y/N]"
   then
   sshKeyGenerationProcedure
   showInstructionsFor How-to-import-created-SSH-keys-into-PuTTY
-fi
-showInstructionsFor Configuration-of-Vim-editor
+fi && \
+showInstructionsFor Configuration-of-Vim-editor && \
 if confirm "Do you want to download, install and configure vundle vim plugin manager? [y/N]"
   then
   installVundleVimPluginManager
   updateVundlePluginInformation
-fi
+fi || \
+echo ok
+#installVundleVimPluginManager
+#updateVundlePluginInformation
+
 echoOk "Script finished"

@@ -1,74 +1,65 @@
 # vim: syntax=sh
 ## Common script methods
+echo ooh: $ohREPOPATH
+scriptPath=$ohREPOPATH/scripts
 scriptPath=$(dirname "$(readlink -f "$0")")
 
-<<<<<<< HEAD:scripts/deployEnv.helpers
-source $scriptPath/../config/bashrc.d/*.basic.ui
-source $scriptPath/deployEnv.help
-=======
-source $scriptPath/bashrc.d/*.basic.ui
-source $scriptPath/scripts/deployEnv.help
->>>>>>> b76a849cc7f9df6467f1bc496162610e638c3c02:scripts/deployEnv.helpers
+source $ohREPOPATH/config/bashrc.d/*.basic.ui
 
 generateConfigLink(){
   local conn=${2:-"ln -s"}
   local mainConfig=$1
-<<<<<<< HEAD:scripts/deployEnv.helpers
-  [ ! -f $scriptPath/../config/$mainConfig ] && return
-  [ ! -f ~/.$mainConfig ] && $conn $scriptPath/../config/$mainConfig ~/.$mainConfig
-  
-=======
-  [ ! -f $scriptPath/$mainConfig ] && return
-  [ -f ~/.$mainConfig ] && [ "$(readlink ~/.$mainConfig)" ~= "$scriptPath" ] && mv ~/.$mainConfig ~/.$mainConfig.backup
-  $conn $scriptPath/$mainConfig ~/.$mainConfig
+  [ ! -f "$ohREPOPATH/config/$mainConfig" ] && return
+  [ -f ~/.$mainConfig ] && [ "$(readlink ~/.$mainConfig)" ~= "$ohREPOPATH" ] && mv ~/.$mainConfig ~/.$mainConfig.backup
+  $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
 
->>>>>>> b76a849cc7f9df6467f1bc496162610e638c3c02:scripts/deployEnv.helpers
   local addonConfigFolder=$1.d
-  [ ! -d $scriptPath/../config/$addonConfigFolder ] && return
+  [ ! -d "$ohREPOPATH/config/$addonConfigFolder" ] && return
   [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
   shopt -s globstar
   shopt -s extglob
-  for addonConfig in $scriptPath/../config/$addonConfigFolder/[0-9]*
+echo $ohREPOPATH/config/$addonConfigFolder/[0-9]*
+ls $ohREPOPATH/config/$addonConfigFolder/[0-9]*
+  for addonConfig in $ohREPOPATH/config/$addonConfigFolder/[0-9]*
     do
     [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
     $($conn $addonConfig ~/.$addonConfigFolder/)
     done
 }
-checkAndMakeHomeBin(){
-  [ ! -d ~/bin ] && mkdir -p ~/bin
-}
 
 installGNUScreenWithVerticalSplit(){
-  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
-  tar -xf ~/screen-4.2.1.tar.gz
-  mv ~/screen-4.2.1 ~/bin/screen-src
-  autoreconf ~/bin/screen-src
-  ~/bin/screen-src/configure --enable-colors256
-  make -C ~/bin/screen-src
-  rm -r doc
-  cp ~/bin/screen-src/screen ~/bin/
-  make clean -C ~/bin/screen-src
-  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
+  #wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
+  #tar -xf ~/screen-4.2.1.tar.gz
+  #mv ~/screen-4.2.1 ~/bin/screen-src
+  #autoreconf ~/bin/screen-src
+  #~/bin/screen-src/configure --enable-colors256
+  #make -C ~/bin/screen-src
+  #rm -r doc
+  #cp ~/bin/screen-src/screen ~/bin/
+  #make clean -C ~/bin/screen-src
+  #rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
+  echo ojojoj instaluje 
 }
 installAckGrep(){
   curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
 }
 installClc(){
-  touch ~/bin/clc
+  printf "#!/bin/bash\nclear && printf '\033[3J'" >> ~/bin/clc
   chmod +x ~/bin/clc
-  echo "#!/bin/bash" >> ~/bin/clc
-  echo "clear && printf '\033[3J'" >> ~/bin/clc
 }
 installColordiffFromGithub(){
   wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
   chmod +x ~/bin/colordiff
 }
+checkAndMakeHomeBin(){
+  mkdir -p ~/bin
+}
 installUtilities(){
-  checkAndMakeHomeBin
-  installGNUScreenWithVerticalSplit
-  installColordiffFromGithub
-  installAckGrep
-  installClc
+  #checkAndMakeHomeBin
+  #installGNUScreenWithVerticalSplit
+  #installColordiffFromGithub
+  #installAckGrep
+installClc
 }
 createFallbackDotProfileLinkToBashrc(){
   local conn=${1:-"ln -s"}
@@ -76,14 +67,10 @@ createFallbackDotProfileLinkToBashrc(){
 }
 listBundledConfigs(){
   configsList=""
-  for configFile in $scriptPath/*rc
+  for configFile in $ohREPOPATH/config/*rc
     do
     configsList="$configsList $(basename $configFile)"
     done
-  [ -f $scriptPath/gitconfig ] && configsList="$configsList gitconfig"
-  #fill git user and email
-  git config --global user.name "$(finger $USER | grep Name | awk '{print $4 " " $5}' | sed 's/Name=//')"
-  git config --global user.email $(finger $USER | grep email | awk '{print $2}' | sed 's/email=//')
   echo $configsList
 }
 generateConfigsLinks(){
@@ -95,11 +82,12 @@ generateConfigsLinks(){
 }
 
 installVundleVimPluginManager(){
+  [ -d ~/.vim/bundle/Vundle.vim ] && mv ~/.vim/bundle/Vundle.vim Vundle.vim.backup
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 }
+
 updateVundlePluginInformation(){
   vim +PluginInstall +qall
-
 }
 
 defaultSshKeyName="id_rsa"
