@@ -2,21 +2,21 @@
 ## Common script methods
 scriptPath=$(dirname "$(readlink -f "$0")")
 
-source $scriptPath/bashrc.d/*.basic.ui
+source $scriptPath/../config/bashrc.d/*.basic.ui
 source $scriptPath/deployEnv.help
 
 generateConfigLink(){
   local conn=${2:-"ln -s"}
   local mainConfig=$1
-  [ ! -f $scriptPath/$mainConfig ] && return
-  [ ! -f ~/.$mainConfig ] && $conn $scriptPath/$mainConfig ~/.$mainConfig
+  [ ! -f $scriptPath/../config/$mainConfig ] && return
+  [ ! -f ~/.$mainConfig ] && $conn $scriptPath/../config/$mainConfig ~/.$mainConfig
   
   local addonConfigFolder=$1.d
-  [ ! -d $scriptPath/$addonConfigFolder ] && return
+  [ ! -d $scriptPath/../config/$addonConfigFolder ] && return
   [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
   shopt -s globstar
   shopt -s extglob
-  for addonConfig in $scriptPath/$addonConfigFolder/[0-9]*
+  for addonConfig in $scriptPath/../config/$addonConfigFolder/[0-9]*
     do
     [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
     $($conn $addonConfig ~/.$addonConfigFolder/)
