@@ -1,44 +1,56 @@
 # vim: syntax=sh
 ## Common script methods
-echo ooh: $ohREPOPATH
 scriptPath=$ohREPOPATH/scripts
-scriptPath=$(dirname "$(readlink -f "$0")")
 
 source $ohREPOPATH/config/bashrc.d/*.basic.ui
 
-generateConfigLink(){
-  local conn=${2:-"ln -s"}
-  local mainConfig=$1
-  [ ! -f "$ohREPOPATH/config/$mainConfig" ] && return
-  [ -f ~/.$mainConfig ] && [ "$(readlink ~/.$mainConfig)" ~= "$ohREPOPATH" ] && mv ~/.$mainConfig ~/.$mainConfig.backup
-  $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
+conn="ln -s"
 
-  local addonConfigFolder=$1.d
+isNotSubstring(){
+  [ "${2/1}" == "$2" ] && false || true
+}
+
+linkMainConfigToHome(){
+  local mainConfig=$1
+  local homeConfigPath=$(readlink ~/.$mainConfig)
+
+  if isNotSubstring "$ohREPOPATH" "$homeConfigPath"
+    then
+    [ -f ~/.$mainConfig ] && mv ~/.$mainConfig ~/.$mainConfig.backup.$(date +%d%m%y.%h%m)
+    $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
+  fi
+}
+linkAddonConfigFoler(){
   [ ! -d "$ohREPOPATH/config/$addonConfigFolder" ] && return
-  [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
+  mkdir -p ~/.$addonConfigFolder
   shopt -s globstar
   shopt -s extglob
-echo $ohREPOPATH/config/$addonConfigFolder/[0-9]*
-ls $ohREPOPATH/config/$addonConfigFolder/[0-9]*
   for addonConfig in $ohREPOPATH/config/$addonConfigFolder/[0-9]*
     do
     [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
-    $($conn $addonConfig ~/.$addonConfigFolder/)
-    done
+    $conn $addonConfig ~/.$addonConfigFolder/
+  done
+}
+generateConfigLink(){
+  local mainConfig=$1
+  local homeConfigPath=$(readlink ~/.$mainConfig)
+  linkMainConfigToHome $mainConfig
+
+  local addonConfigFolder=$1.d
+  linkAddonConfigFoler $addonConfigFolder
 }
 
 installGNUScreenWithVerticalSplit(){
-  #wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
-  #tar -xf ~/screen-4.2.1.tar.gz
-  #mv ~/screen-4.2.1 ~/bin/screen-src
-  #autoreconf ~/bin/screen-src
-  #~/bin/screen-src/configure --enable-colors256
-  #make -C ~/bin/screen-src
-  #rm -r doc
-  #cp ~/bin/screen-src/screen ~/bin/
-  #make clean -C ~/bin/screen-src
-  #rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
-  echo ojojoj instaluje 
+  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
+  tar -xf ~/screen-4.2.1.tar.gz
+  mv ~/screen-4.2.1 ~/bin/screen-src
+  autoreconf ~/bin/screen-src
+  ~/bin/screen-src/configure --enable-colors256
+  make -C ~/bin/screen-src
+  rm -r doc
+  cp ~/bin/screen-src/screen ~/bin/
+  make clean -C ~/bin/screen-src
+  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
 }
 installAckGrep(){
   curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
@@ -55,19 +67,17 @@ checkAndMakeHomeBin(){
   mkdir -p ~/bin
 }
 installUtilities(){
-  #checkAndMakeHomeBin
+  checkAndMakeHomeBin
   #installGNUScreenWithVerticalSplit
-  #installColordiffFromGithub
-  #installAckGrep
-installClc
-}
-createFallbackDotProfileLinkToBashrc(){
-  local conn=${1:-"ln -s"}
-  [ ! -f ~/.profile ] && $conn ~/.bashrc ~/.profile
+  installColordiffFromGithub
+  installAckGrep
+  installClc
 }
 listBundledConfigs(){
   configsList=""
-  for configFile in $ohREPOPATH/config/*rc
+  shopt -s extglob
+  filesInConfigDir=$(echo "$ohREPOPATH/config/!(*.d)")
+  for configFile in $filesInConfigDir
     do
     configsList="$configsList $(basename $configFile)"
     done
@@ -76,9 +86,8 @@ listBundledConfigs(){
 generateConfigsLinks(){
   for configToLink in $(listBundledConfigs)
     do
-    generateConfigLink $configToLink ${1:-""}
+    generateConfigLink $configToLink
   done
-  createFallbackDotProfileLinkToBashrc
 }
 
 installVundleVimPluginManager(){
