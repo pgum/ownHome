@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rm -rf .bashrc* .vimrc* .profile .screenrc* .colordiffrc

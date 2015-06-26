@@ -2,15 +2,27 @@
 ## Common script methods
 scriptPath=$(dirname "$(readlink -f "$0")")
 
+<<<<<<< HEAD:scripts/deployEnv.helpers
 source $scriptPath/../config/bashrc.d/*.basic.ui
 source $scriptPath/deployEnv.help
+=======
+source $scriptPath/bashrc.d/*.basic.ui
+source $scriptPath/scripts/deployEnv.help
+>>>>>>> b76a849cc7f9df6467f1bc496162610e638c3c02:scripts/deployEnv.helpers
 
 generateConfigLink(){
   local conn=${2:-"ln -s"}
   local mainConfig=$1
+<<<<<<< HEAD:scripts/deployEnv.helpers
   [ ! -f $scriptPath/../config/$mainConfig ] && return
   [ ! -f ~/.$mainConfig ] && $conn $scriptPath/../config/$mainConfig ~/.$mainConfig
   
+=======
+  [ ! -f $scriptPath/$mainConfig ] && return
+  [ -f ~/.$mainConfig ] && [ "$(readlink ~/.$mainConfig)" ~= "$scriptPath" ] && mv ~/.$mainConfig ~/.$mainConfig.backup
+  $conn $scriptPath/$mainConfig ~/.$mainConfig
+
+>>>>>>> b76a849cc7f9df6467f1bc496162610e638c3c02:scripts/deployEnv.helpers
   local addonConfigFolder=$1.d
   [ ! -d $scriptPath/../config/$addonConfigFolder ] && return
   [ ! -d ~/.$addonConfigFolder ] && mkdir ~/.$addonConfigFolder
@@ -22,6 +34,42 @@ generateConfigLink(){
     $($conn $addonConfig ~/.$addonConfigFolder/)
     done
 }
+checkAndMakeHomeBin(){
+  [ ! -d ~/bin ] && mkdir -p ~/bin
+}
+
+installGNUScreenWithVerticalSplit(){
+  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz
+  tar -xf ~/screen-4.2.1.tar.gz
+  mv ~/screen-4.2.1 ~/bin/screen-src
+  autoreconf ~/bin/screen-src
+  ~/bin/screen-src/configure --enable-colors256
+  make -C ~/bin/screen-src
+  rm -r doc
+  cp ~/bin/screen-src/screen ~/bin/
+  make clean -C ~/bin/screen-src
+  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
+}
+installAckGrep(){
+  curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
+}
+installClc(){
+  touch ~/bin/clc
+  chmod +x ~/bin/clc
+  echo "#!/bin/bash" >> ~/bin/clc
+  echo "clear && printf '\033[3J'" >> ~/bin/clc
+}
+installColordiffFromGithub(){
+  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
+  chmod +x ~/bin/colordiff
+}
+installUtilities(){
+  checkAndMakeHomeBin
+  installGNUScreenWithVerticalSplit
+  installColordiffFromGithub
+  installAckGrep
+  installClc
+}
 createFallbackDotProfileLinkToBashrc(){
   local conn=${1:-"ln -s"}
   [ ! -f ~/.profile ] && $conn ~/.bashrc ~/.profile
@@ -32,6 +80,10 @@ listBundledConfigs(){
     do
     configsList="$configsList $(basename $configFile)"
     done
+  [ -f $scriptPath/gitconfig ] && configsList="$configsList gitconfig"
+  #fill git user and email
+  git config --global user.name "$(finger $USER | grep Name | awk '{print $4 " " $5}' | sed 's/Name=//')"
+  git config --global user.email $(finger $USER | grep email | awk '{print $2}' | sed 's/email=//')
   echo $configsList
 }
 generateConfigsLinks(){
@@ -51,10 +103,10 @@ updateVundlePluginInformation(){
 }
 
 defaultSshKeyName="id_rsa"
-defaultSshKeyPath="~/.ssh"
+defaultSshKeyPath="$HOME/.ssh"
 
 isAlreadyFileNamedLikeDefaultSshKey(){
-  [ ! -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
+  [ -f $defaultSshKeyPath/$defaultSshKeyName ] && true || false
 }
 sshKeyGenerationWithDefaults(){
   ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
@@ -69,8 +121,6 @@ sshKeyGenerationProcedure(){
     ssh-keygen
   elif [ confirm "Do you want to generate SSH key with custom settings? [y/N]" ]
     then
-    ssh-keygen
-  else
     sshKeyGenerationWithDefaults
   fi
 }

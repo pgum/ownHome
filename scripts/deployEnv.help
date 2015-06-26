@@ -6,18 +6,21 @@ showInstructionsFor(){
     What-will-be-configured)
     echo -ne \
     "This script is going to setup your enviroment following procedure:
-    * SSH keys generation
+    * SSH keys generation,
     * Bash configuration,
+    * GNU Screen configuration,
+    * Colordiff download and configuration,
     * Vim plugins initialization/configuration.
 ";;
 Config-files-file-structure)
   echo -ne \
-  "In your home directory you will find .Bashrc and .Vimrc directories. Inside them are config files plugins
-that are loaded right after main .bashrc and .vimrc. Order of execution is dependant on filename. Only files
-that start with <number>.<main-name> are loaded.
+  "In your home directory you will find .bashrc.d, .vimrc.d, .screenrc.d, etc. directories. Inside them are config files plugins
+that are loaded right after main ones in named .bashrc, .vimrc, .screenrc, etc.
+For bashrc sand vimrc configs order of execution is dependant on filename. Only files
+that start with <number>.<main-name> are loaded from proper *.d/.
 
 To make own add-on:
-  1) Add file with name following name convention into your ~/.Bashrc or ~/.Vimrc,
+  1) Add file with name following name convention into your ~/.*.d/,
   2) Fill file with your code,
   3) After bash/vim is executed, all config add-ons are sourced and can be used,
 
@@ -27,7 +30,7 @@ To use functions from bash config add-ons in your own scripts (that are sourced 
 Use following command: ${yellow}source ~/.bashrc ${nocolor}
 
 To stop using particular config add-on:
-  1) If it's a symlink to \"common account repository\":
+  1) If it's a symlink to config from repo:
   ${yellow}unlink <name>${nocolor}
   2) If it's your custom config add-on:
   Just change its name to not starting with digit, or either remove (with rm) or move (with mv) it from directory
@@ -57,8 +60,8 @@ Run PuTTYgen tool, load copied file. A dialog box will pop up telling you how to
 ";;
   Configuration-of-Vim-editor)
     echo -ne \
-    "Vimrc files are configuration files for Vim Text Editor.
-When loading, .vimrc will autoload all other config files in ~/.Vimrc/vimrc.<module>
+    "vimrc.d files are configuration files for Vim Text Editor.
+When loading, .vimrc will autoload all other config files in ~/.vimrc.d/<number>.<module>
 This step consist of two actions: getting Vundle from git repo, update Vundle plugin information from vimrc files.
 ";;
   *)
