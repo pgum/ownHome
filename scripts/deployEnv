@@ -1,7 +1,7 @@
 #!/bin/bash
 export ohREPOPATH=$(dirname $(dirname "$(readlink -f "$0")"))
 scriptPath=$ohREPOPATH/scripts
-source $scriptPath/deployEnv.helpers
+source $scriptPath/deployEnv.functions
 
 configurationType=${1:-"manual"}
 

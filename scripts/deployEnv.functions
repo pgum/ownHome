@@ -2,7 +2,7 @@
 ## Common script methods
 scriptPath=$ohREPOPATH/scripts
 
-source $ohREPOPATH/config/bashrc.d/*.basic.ui
+source $ohREPOPATH/config/bashrc.d/*.basic_ui
 
 conn="ln -s"
 
