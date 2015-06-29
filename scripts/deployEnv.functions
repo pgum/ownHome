@@ -7,15 +7,22 @@ source $ohREPOPATH/config/bashrc.d/*.basic_ui
 conn="ln -s"
 
 isNotSubstring(){
-  [ "${2/1}" == "$2" ] && false || true
+local needle=$2
+local haystack=$1
+
+#haystack - needle is equal haystack if substring wasnt cut out
+[ "${haystack/needle}" == "$haystack" ] && true || false
+}
+
+isConfigPathFromRepo(){
+  isNotSubstring "$ohREPOPATH" "$1"
 }
 
 linkMainConfigToHome(){
   local mainConfig=$1
   local homeConfigPath=$(readlink ~/.$mainConfig)
-
-  if isNotSubstring "$ohREPOPATH" "$homeConfigPath"
-    then
+  if isConfigPathFromRepo "$homeConfigPath"
+  then
     [ -f ~/.$mainConfig ] && mv ~/.$mainConfig ~/.$mainConfig.backup.$(date +%d%m%y.%h%m)
     $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
   fi
@@ -68,7 +75,7 @@ checkAndMakeHomeBin(){
 }
 installUtilities(){
   checkAndMakeHomeBin
-  #installGNUScreenWithVerticalSplit
+  installGNUScreenWithVerticalSplit
   installColordiffFromGithub
   installAckGrep
   installClc
@@ -82,11 +89,13 @@ listBundledConfigs(){
     configsList="$configsList $(basename $configFile)"
     done
   echo $configsList
+export ohBundledConfigs=$configsList
 }
 generateConfigsLinks(){
   for configToLink in $(listBundledConfigs)
     do
-    generateConfigLink $configToLink
+    linkMainConfigToHome $configToLink
+#    generateConfigLink $configToLink
   done
 }
 

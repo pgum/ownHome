@@ -13,7 +13,7 @@ alias mv='mv -v -i'
 alias cp='cp -v -i'
 alias rm='rm -v -i'
 alias rmrf='rm -r -v -f'
-
+work=/var/work
 alias basr=". ~/.bashrc"
 
 fgp(){
