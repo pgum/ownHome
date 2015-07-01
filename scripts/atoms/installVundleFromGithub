@@ -1,0 +1,8 @@
+# vim: syntax=sh
+
+installVundleVimPluginManager(){
+  [ -d ~/.vim/bundle/Vundle.vim ] && mv ~/.vim/bundle/Vundle.vim Vundle.vim.backup
+  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+  vim +PluginInstall +qall
+}
+

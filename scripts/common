@@ -1,0 +1,54 @@
+# vim: syntax=sh
+## Common script methods
+scriptPath=$ohREPOPATH/scripts
+
+conn="ln -s"
+
+listBundledConfigs(){
+  configsList=""
+  shopt -s extglob
+  filesInConfigDir=$(echo "$ohREPOPATH/config/!(*.d)")
+  for configFile in $filesInConfigDir
+    do
+    configsList="$configsList $(basename $configFile)"
+    done
+  echo $configsList
+export ohBundledConfigs=$configsList
+}
+
+linkMainConfigToHome(){
+  local mainConfig=$1
+  local homeConfigPath=$(readlink ~/.$mainConfig)
+  if isConfigPathFromRepo "$homeConfigPath"
+  then
+    [ -f ~/.$mainConfig ] && mv ~/.$mainConfig ~/.$mainConfig.backup.$(date +%d%m%y.%h%m)
+    $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
+  fi
+}
+linkAddonConfigFoler(){
+  [ ! -d "$ohREPOPATH/config/$addonConfigFolder" ] && return
+  mkdir -p ~/.$addonConfigFolder
+  shopt -s globstar
+  shopt -s extglob
+  for addonConfig in $ohREPOPATH/config/$addonConfigFolder/[0-9]*
+    do
+    [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
+    $conn $addonConfig ~/.$addonConfigFolder/
+  done
+}
+
+isConfigPathFromRepo(){
+  isNotSubstring "$ohREPOPATH" "$1"
+}
+
+isNotSubstring(){
+local needle=$2
+local haystack=$1
+
+#haystack - needle is equal haystack if substring wasnt cut out
+[ "${haystack/needle}" == "$haystack" ] && true || false
+}
+
+
+
+

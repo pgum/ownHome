@@ -1,0 +1,6 @@
+# vim: syntax=sh
+
+installColordiffFromGithub(){
+  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff
+  chmod +x ~/bin/colordiff
+}

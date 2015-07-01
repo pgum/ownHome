@@ -1,0 +1,7 @@
+
+# vim: syntax=sh
+## Common script methods
+scriptPath=$ohREPOPATH/scripts
+
+source $ohREPOPATH/config/bashrc.d/*.basic_ui
+
