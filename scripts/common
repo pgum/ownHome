@@ -19,6 +19,30 @@ export ohBundledConfigs=${configsList}
 updateRepo(){
   echo update repo
   }
+backupPreviousConfig(){
+#for every config and directory we have
+local configFilesToBackup=
+for config in ${ohREPOPATH}/config/*
+    do
+#check if in user ~/ exist file named the same but with dot "." in front - if this happens, then save its name
+    weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
+    [ -f $weLookFor ] || [ -d $weLookFor ] && configFilesToBackup="$configFilesToBackup $weLookFor"
+  done
+#copy files to new folder named after current date and time
+local backupDirName="${ohREPOPATH}/backups/backup.$(date +%d%m%y.%H%M)"
+mkdir ${backupDirName} && cp -L -r -t ${backupDirName} ${configFilesToBackup}
+}
+
+isConfigPathFromRepo(){
+  isNotSubstring "${ohREPOPATH}" "${1}"
+}
+
+isNotSubstring(){
+local needle=$2
+local haystack=$1
+#haystack - needle is equal haystack if substring wasnt cut out
+[ "${haystack/needle}" == "$haystack" ]
+}
 
 linkMainConfigToHome(){
   local mainConfig=$1
@@ -40,18 +64,4 @@ linkAddonConfigFoler(){
     $conn $addonConfig ~/.$addonConfigFolder/
   done
 }
-
-isConfigPathFromRepo(){
-  isNotSubstring "${ohREPOPATH}" "${1}"
-}
-
-isNotSubstring(){
-local needle=$2
-local haystack=$1
-#haystack - needle is equal haystack if substring wasnt cut out
-[ "${haystack/needle}" == "$haystack" ]
-}
-
-
-
 
