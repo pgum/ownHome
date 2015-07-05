@@ -1,20 +1,24 @@
 # vim: syntax=sh
 ## Common script methods
-scriptPath=$ohREPOPATH/scripts
+scriptPath=${ohREPOPATH}/scripts
 
 conn="ln -s"
 
 listBundledConfigs(){
   configsList=""
   shopt -s extglob
-  filesInConfigDir=$(echo "$ohREPOPATH/config/!(*.d)")
-  for configFile in $filesInConfigDir
+  filesInConfigDir=$(echo "${ohREPOPATH}/config/!(*.d)")
+  for configFile in ${filesInConfigDir}
     do
-    configsList="$configsList $(basename $configFile)"
+    configsList="${configsLis}t $(basename ${configFile})"
     done
-  echo $configsList
-export ohBundledConfigs=$configsList
+  echo ${configsList}
+export ohBundledConfigs=${configsList}
 }
+
+updateRepo(){
+  echo update repo
+  }
 
 linkMainConfigToHome(){
   local mainConfig=$1
@@ -38,15 +42,14 @@ linkAddonConfigFoler(){
 }
 
 isConfigPathFromRepo(){
-  isNotSubstring "$ohREPOPATH" "$1"
+  isNotSubstring "${ohREPOPATH}" "${1}"
 }
 
 isNotSubstring(){
 local needle=$2
 local haystack=$1
-
 #haystack - needle is equal haystack if substring wasnt cut out
-[ "${haystack/needle}" == "$haystack" ] && true || false
+[ "${haystack/needle}" == "$haystack" ]
 }
 
 
