@@ -9,7 +9,8 @@ To install:
 Have fun :)
 
 # TODO
-* Separate deployment scripts from dotfiles
+* ~~Separate deployment scripts from dotfiles~~
+* Add a wiki to the project
 * Create update system
 * Give more informations when deployEnv
 * Create better installer scripts - use `make` maybe? 
