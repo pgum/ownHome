@@ -8,7 +8,7 @@ listBundledConfigs(){
   filesInConfigDir=$(echo "${ohREPOPATH}/config/!(*.d)")
   for configFile in ${filesInConfigDir}
     do
-    configsList="${configsLis}t $(basename ${configFile})"
+    configsList="${configsList} $(basename ${configFile})"
     done
   echo ${configsList}
 export ohBundledConfigs=${configsList}
