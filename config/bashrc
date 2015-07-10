@@ -25,6 +25,7 @@ export PATH=./:$PATH
 export GREP_OPTIONS='--color=auto'
 loadedAddonConfigs=""
 loadAdditionalBashrcToConfig(){
+  shopt -s extglob  
   for additionalBashrc in ~/.bashrc.d/[0-9]*
     do
     configFilename=$(basename ${additionalBashrc})
