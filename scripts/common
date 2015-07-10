@@ -2,8 +2,6 @@
 ## Common script methods
 scriptPath=${ohREPOPATH}/scripts
 
-conn="ln -s"
-
 listBundledConfigs(){
   configsList=""
   shopt -s extglob
@@ -15,18 +13,26 @@ listBundledConfigs(){
   echo ${configsList}
 export ohBundledConfigs=${configsList}
 }
+generateConfigsLinks(){
+  for configToLink in $(listBundledConfigs)
+    do
+    linkMainConfigToHome $configToLink
+#    generateConfigLink $configToLink
+  done
+}
 
 updateRepo(){
   echo update repo
-  }
+}
+
 backupPreviousConfig(){
 #for every config and directory we have
 local configFilesToBackup=
 for config in ${ohREPOPATH}/config/*
-    do
+  do
 #check if in user ~/ exist file named the same but with dot "." in front - if this happens, then save its name
-    weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
-    [ -f $weLookFor ] || [ -d $weLookFor ] && configFilesToBackup="$configFilesToBackup $weLookFor"
+  local weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
+  [ -f $weLookFor ] || [ -d $weLookFor ] && configFilesToBackup="$configFilesToBackup $weLookFor"
   done
 #copy files to new folder named after current date and time
 local backupDirName="${ohREPOPATH}/backups/backup.$(date +%d%m%y.%H%M)"
@@ -47,11 +53,7 @@ local haystack=$1
 linkMainConfigToHome(){
   local mainConfig=$1
   local homeConfigPath=$(readlink ~/.$mainConfig)
-  if isConfigPathFromRepo "$homeConfigPath"
-  then
-    [ -f ~/.$mainConfig ] && mv ~/.$mainConfig ~/.$mainConfig.backup.$(date +%d%m%y.%h%m)
-    $conn $ohREPOPATH/config/$mainConfig ~/.$mainConfig
-  fi
+    ln -s $ohREPOPATH/config/$mainConfig ~/.$mainConfig
 }
 linkAddonConfigFoler(){
   [ ! -d "$ohREPOPATH/config/$addonConfigFolder" ] && return
@@ -61,7 +63,24 @@ linkAddonConfigFoler(){
   for addonConfig in $ohREPOPATH/config/$addonConfigFolder/[0-9]*
     do
     [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
-    $conn $addonConfig ~/.$addonConfigFolder/
+    ln -s $addonConfig ~/.$addonConfigFolder/
   done
+}
+wipePreviousConfig(){
+for config in ${ohREPOPATH}/config/*
+  do
+#check if in user ~/ exist file named the same but with dot "." in front - if this happens, then save its name
+  local weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
+  rm -rf $weLookFor 2>/dev/null
+  done
+}
+
+generateConfigLink(){
+  local mainConfig=$1
+  local homeConfigPath=$(readlink ~/.$mainConfig)
+  linkMainConfigToHome $mainConfig
+
+  local addonConfigFolder=$1.d
+  linkAddonConfigFoler $addonConfigFolder
 }
 

@@ -1,31 +1,13 @@
 #!/bin/bash
 export ohREPOPATH=$(dirname $(dirname "$(readlink -f "$0")"))
 scriptPath=$ohREPOPATH/scripts
-source $scriptPath/deployEnv.functions
+source $scriptPath/common
 
-configurationType=${1:-"manual"}
-
-showInstructions(){
-  [ ! $configurationType = "auto" ] && showInstructionsFor $1 && pressReturnToContinue
-}
-
-source $scriptPath/deployEnv.help
-
-showInstructions What-will-be-configured
-showInstructions Config-files-file-structure
-
+backupPreviousConfig
+wipePreviousConfig
 generateConfigsLinks
-#installUtilities
-
-showInstructions Configuration-of-Vim-editor && \
-  installVundleVimPluginManager && \
-  updateVundlePluginInformation
-
-showInstructions SSH-key-generation-linux-side && \
-  if confirm "Do you want to generate SSH Keys? [y/N]"
-    then
-    sshKeyGenerationProcedure
-    showInstructions How-to-import-created-SSH-keys-into-PuTTY
-  fi
-
-echoOk "Script finished"
+exit
+installUtilities
+installVundleVimPluginManager
+updateVundlePluginInformation
+generateSshKeys
