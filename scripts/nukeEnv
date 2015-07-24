@@ -1,3 +1,8 @@
 #!/bin/bash
+scriptPath=$(dirname $(dirname "$(readlink -f "$0")"))
 
-rm -rf .bashrc* .vimrc* .profile .screenrc* .colordiffrc
+shopt -s extglob globstar
+for addonConfig in $scriptPath/dot/.*
+  do echo rm -rf ~/$(basename $addonConfig)
+  done
+

@@ -1,13 +1,10 @@
 #!/bin/bash
-export ohREPOPATH=$(dirname $(dirname "$(readlink -f "$0")"))
-scriptPath=$ohREPOPATH/scripts
+repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
+scriptPath=$repoPath/scripts
 source $scriptPath/common
 
-backupPreviousConfig
-wipePreviousConfig
-generateConfigsLinks
-exit
+#generate config links, backup old
+rsync -avnr --backup-dir=~/backup/$(date +%Y-%M-%d) $scriptPath/dot/ ~/
 installUtilities
 installVundleVimPluginManager
-updateVundlePluginInformation
-generateSshKeys
+#generateSshKeys

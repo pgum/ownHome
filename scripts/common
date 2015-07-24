@@ -1,86 +1,70 @@
 # vim: syntax=sh
 ## Common script methods
-scriptPath=${ohREPOPATH}/scripts
+#scriptPath=$(dirname $(dirname "$(readlink -f "$0")"))
+#scriptPath=${ohREPOPATH}/scripts
 
-listBundledConfigs(){
-  configsList=""
-  shopt -s extglob
-  filesInConfigDir=$(echo "${ohREPOPATH}/config/!(*.d)")
-  for configFile in ${filesInConfigDir}
-    do
-    configsList="${configsList} $(basename ${configFile})"
-    done
-  echo ${configsList}
-export ohBundledConfigs=${configsList}
-}
-generateConfigsLinks(){
-  for configToLink in $(listBundledConfigs)
-    do
-    linkMainConfigToHome $configToLink
-#    generateConfigLink $configToLink
-  done
+installGNUScreenWithVerticalSplit(){
+if [ $(which screen) --version | awk '{print $3}' | tr -d '[:alpha:][:punct:]' -lt 40201 ]
+  then
+  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz && \
+  tar -xf ~/screen-4.2.1.tar.gz && \
+  mv ~/screen-4.2.1 ~/bin/screen-src && \
+  autoreconf ~/bin/screen-src && \
+  ~/bin/screen-src/configure --enable-colors256 && \
+  make -C ~/bin/screen-src && \
+  cp ~/bin/screen-src/screen ~/bin/ && \
+  make clean -C ~/bin/screen-src && \
+  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status ~/doc ~/kmapdef.c ~/Makefile  ~/osdef.h ~/screen-4.2.1.tar.gz ~/term.h
+  fi
 }
 
-updateRepo(){
-  echo update repo
+installColordiffFromGithub(){
+  [ ! $(which colordiff) ] && \
+  wget --no-check-certificate https://raw.github.com/daveewart/colordiff/current/colordiff.pl -O ~/bin/colordiff && chmod +x ~/bin/colordiff
 }
 
-backupPreviousConfig(){
-#for every config and directory we have
-local configFilesToBackup=
-for config in ${ohREPOPATH}/config/*
-  do
-#check if in user ~/ exist file named the same but with dot "." in front - if this happens, then save its name
-  local weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
-  [ -f $weLookFor ] || [ -d $weLookFor ] && configFilesToBackup="$configFilesToBackup $weLookFor"
-  done
-#copy files to new folder named after current date and time
-local backupDirName="${ohREPOPATH}/backups/backup.$(date +%d%m%y.%H%M)"
-mkdir ${backupDirName} && cp -L -r -t ${backupDirName} ${configFilesToBackup}
+installAckGrep(){
+  [ -f ~/bin/ack ] && curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod +x ~/bin/ack
 }
 
-isConfigPathFromRepo(){
-  isNotSubstring "${ohREPOPATH}" "${1}"
+installClc(){
+  [ -f ~/bin/clc ] && printf "#!/bin/bash\nclear && printf '\033[3J'" >> ~/bin/clc && chmod +x ~/bin/clc
 }
 
-isNotSubstring(){
-local needle=$2
-local haystack=$1
-#haystack - needle is equal haystack if substring wasnt cut out
-[ "${haystack/needle}" == "$haystack" ]
+installUtilities(){
+  mkdir -p ~/bin
+  installGNUScreenWithVerticalSplit
+  installColordiffFromGithub
+  installAckGrep
+  installClc
 }
 
-linkMainConfigToHome(){
-  local mainConfig=$1
-  local homeConfigPath=$(readlink ~/.$mainConfig)
-    ln -s $ohREPOPATH/config/$mainConfig ~/.$mainConfig
-}
-linkAddonConfigFoler(){
-  [ ! -d "$ohREPOPATH/config/$addonConfigFolder" ] && return
-  mkdir -p ~/.$addonConfigFolder
-  shopt -s globstar
-  shopt -s extglob
-  for addonConfig in $ohREPOPATH/config/$addonConfigFolder/[0-9]*
-    do
-    [ -f ~/.$addonConfigFolder/$(basename $addonConfig) ] && continue
-    ln -s $addonConfig ~/.$addonConfigFolder/
-  done
-}
-wipePreviousConfig(){
-for config in ${ohREPOPATH}/config/*
-  do
-#check if in user ~/ exist file named the same but with dot "." in front - if this happens, then save its name
-  local weLookFor="${HOME}/.${config#$ohREPOPATH/config/}" #we look for files in ~/ named as those in config/
-  rm -rf $weLookFor 2>/dev/null
-  done
+installVundleVimPluginManager(){
+  [ ! -d ~/.vim/bundle/Vundle.vim ] && \
+  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+  vim +PluginInstall +qall
 }
 
-generateConfigLink(){
-  local mainConfig=$1
-  local homeConfigPath=$(readlink ~/.$mainConfig)
-  linkMainConfigToHome $mainConfig
+defaultSshKeyName="id_rsa"
+defaultSshKeyPath="$HOME/.ssh"
 
-  local addonConfigFolder=$1.d
-  linkAddonConfigFoler $addonConfigFolder
+isAlreadyFileNamedLikeDefaultSshKey(){
+  [ -f $defaultSshKeyPath/$defaultSshKeyName ]
+}
+sshKeyGenerationWithDefaults(){
+  ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
+  echoInfo "Copying $sshKeyName.pub key to authorized keys for $USER"
+  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+}
+
+sshKeyGenerationProcedure(){
+  if isAlreadyFileNamedLikeDefaultSshKey
+    then
+    echoWarn "File $defaultSshKeyPath/$defaultSshKeyName already exist... Manual SSH generation required!"
+    ssh-keygen
+  elif [ confirm "Do you want to generate SSH key with custom settings? [y/N]" ]
+    then
+    sshKeyGenerationWithDefaults
+  fi
 }
 
