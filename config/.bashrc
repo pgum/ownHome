@@ -1,5 +1,5 @@
 #if global config exist, include that first
-if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
+[ -f /etc/bashrc ] &&  source /etc/bashrc
 
 alias tarit='tar -cvf '
 alias untarit='tar -xf '

@@ -1,0 +1,14 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+) menubar.show	rc.lua	/^    awful.key({ modkey }, "p", function() menubar.show() end)$/;"	f
+awful.button({ }, 1, function (c) client.focus 	rc.lua	/^    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),$/;"	f
+awful.key({ modkey,           }, "f",      function (c) c.fullscreen 	rc.lua	/^    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),$/;"	f
+awful.key({ modkey,           }, "t",      function (c) c.ontop 	rc.lua	/^    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),$/;"	f
+client.connect_signal("focus", function(c) c.border_color 	rc.lua	/^client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)$/;"	f
+client.connect_signal("unfocus", function(c) c.border_color 	rc.lua	/^client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)$/;"	f
+t) awful.tag.viewnext	rc.lua	/^                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),$/;"	f
+t) awful.tag.viewprev	rc.lua	/^                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)$/;"	f
