@@ -2,31 +2,31 @@
 export ohREPOPATH=$(dirname $(dirname "$(readlink -f "$0")"))
 scriptPath=$ohREPOPATH/scripts
 
-configurationType=${1:-"manual"}
+#configurationType=${1:-"manual"}
 
-showInstructions(){
-  [ ! $configurationType = "auto" ] && showInstructionsFor $1 && pressReturnToContinue
-}
+#showInstructions(){
+#  [ ! $configurationType = "auto" ] && showInstructionsFor $1 && pressReturnToContinue
+#}
 
 source $scriptPath/common
-source $scriptPath/help.installer
+#source $scriptPath/help.installer
 
-showInstructions What-will-be-configured
-showInstructions Config-files-file-structure
+#showInstructions What-will-be-configured
+#showInstructions Config-files-file-structure
 
 generateConfigsLinks
 installUtilities
 
-showInstructions Configuration-of-Vim-editor && \
+#showInstructions Configuration-of-Vim-editor && \
   installVundleVimPluginManager && \
   updateVundlePluginInformation
 
-showInstructions SSH-key-generation-linux-side && \
-  if confirm "Do you want to generate SSH Keys? [y/N]"
-    then
+#showInstructions SSH-key-generation-linux-side && \
+#  if confirm "Do you want to generate SSH Keys? [y/N]"
+#    then
     sshKeyGenerationProcedure
-    showInstructions How-to-import-created-SSH-keys-into-PuTTY
-  fi
+#    showInstructions How-to-import-created-SSH-keys-into-PuTTY
+#  fi
 
-echoOk "Script finished"
+#echoOk "Script finished"
 
