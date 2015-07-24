@@ -5,6 +5,12 @@ source $scriptPath/common
 
 #generate config links, backup old
 rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $scriptPath/dot/ ~/
-installUtilities
-installVundleVimPluginManager
-#generateSshKeys
+#install tools
+mkdir -p ~/bin
+installGNUScreenWithVerticalSplit
+installColordiffFromGithub
+installAckGrep
+installClc
+#
+cloneVundlePluginManager
+

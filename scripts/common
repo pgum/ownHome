@@ -31,15 +31,7 @@ installClc(){
   [ -f ~/bin/clc ] && printf "#!/bin/bash\nclear && printf '\033[3J'" >> ~/bin/clc && chmod +x ~/bin/clc
 }
 
-installUtilities(){
-  mkdir -p ~/bin
-  installGNUScreenWithVerticalSplit
-  installColordiffFromGithub
-  installAckGrep
-  installClc
-}
-
-installVundleVimPluginManager(){
+cloneVundlePluginManager(){
   [ ! -d ~/.vim/bundle/Vundle.vim ] && \
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
   vim +PluginInstall +qall
