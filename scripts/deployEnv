@@ -4,7 +4,7 @@ scriptPath=$repoPath/scripts
 source $scriptPath/common
 
 #generate config links, backup old
-rsync -avnr --backup-dir=~/backup/$(date +%Y-%M-%d) $scriptPath/dot/ ~/
+rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $scriptPath/dot/ ~/
 installUtilities
 installVundleVimPluginManager
 #generateSshKeys
