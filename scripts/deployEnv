@@ -1,20 +1,11 @@
 #!/bin/bash
 repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
 scriptPath=$repoPath/scripts
-source $scriptPath/common
 
 #generate config links, backup old
-rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $scriptPath/dot/ ~/
-#install tools
-mkdir -p ~/bin
-installGNUScreenWithVerticalSplit
-installColordiffFromGithub
-installAckGrep
-installClc
+rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
 
 #git user&email configuration
 git config --global user.name "$(finger $USER | head -n1 | awk -F'Name: ' '{print $2}')"
 git config --global user.email "$(finger $USER | head -n1 | cut -d' ' -f2)@$(echo $HOSTNAME)"
-#
-cloneVundlePluginManager
 
