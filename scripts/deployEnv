@@ -11,6 +11,10 @@ installGNUScreenWithVerticalSplit
 installColordiffFromGithub
 installAckGrep
 installClc
+
+#git user&email configuration
+git config --global user.name "$(finger $USER | head -n1 | awk -F'Name: ' '{print $2}')"
+git config --global user.email "$(finger $USER | head -n1 | cut -d' ' -f2)@$(echo $HOSTNAME)"
 #
 cloneVundlePluginManager
 
