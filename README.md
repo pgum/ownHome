@@ -1,6 +1,8 @@
 # ownHome
-Deploy modular bashrc, vimrc and others.  
-  
+##Nowhere better then ~/
+This repository consist of dot files for my linux machines. There are some few useful bits here and there.
+I try to make it easy to understand and modify. I also want to easy update my configs, so I wrote few scripts for that.
+
   
 To install:  
 `git clone https://github.com/pgum/ownHome ~/.ownHome && ~/.ownHome/auto.deployEnv && $SHELL`  
@@ -9,11 +11,8 @@ To install:
 Have fun :)
 
 # TODO
-* ~~Separate deployment scripts from dotfiles~~
 * Add a wiki to the project
 * Create update system
-* Give more informations when deployEnv
-* Create better installer scripts - use `make` maybe? 
 * constantly add new things
 
 # Speed
