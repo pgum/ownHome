@@ -4,7 +4,8 @@
 #scriptPath=${ohREPOPATH}/scripts
 
 installGNUScreenWithVerticalSplit(){
-if [ $(which screen) --version | awk '{print $3}' | tr -d '[:alpha:][:punct:]' -lt 40201 ]
+screenVersion=$(echo $($(which screen) --version) | awk '{print $3}' | tr -d [:alpha:][:punct:])
+if [ ! $(which screen) ] || [ $screenVersion -lt 40201 ]
   then
   wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz && \
   tar -xf ~/screen-4.2.1.tar.gz && \
@@ -40,9 +41,6 @@ cloneVundlePluginManager(){
 defaultSshKeyName="id_rsa"
 defaultSshKeyPath="$HOME/.ssh"
 
-isAlreadyFileNamedLikeDefaultSshKey(){
-  [ -f $defaultSshKeyPath/$defaultSshKeyName ]
-}
 sshKeyGenerationWithDefaults(){
   ssh-keygen -f $defaultSshKeyPath/$defaultSshKeyName -N ""
   echoInfo "Copying $sshKeyName.pub key to authorized keys for $USER"
@@ -50,7 +48,7 @@ sshKeyGenerationWithDefaults(){
 }
 
 sshKeyGenerationProcedure(){
-  if isAlreadyFileNamedLikeDefaultSshKey
+  if [ -f $defaultSshKeyPath/$defaultSshKeyName ]
     then
     echoWarn "File $defaultSshKeyPath/$defaultSshKeyName already exist... Manual SSH generation required!"
     ssh-keygen
