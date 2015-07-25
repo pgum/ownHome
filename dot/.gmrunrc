@@ -5,7 +5,7 @@
 # Set terminal
 Terminal = lxterminal
 TermExec = ${Terminal} -e
-AlwaysInTerm = ssh telnet ftp lynx mc vi vim pine centericq perldoc man
+AlwaysInTerm = ssh telnet ftp lynx mc vi vim pine centericq perldoc man vim
 
 # Set window geometry (except height)
 Width = 400
@@ -45,8 +45,8 @@ URL_paci = ${TermExec} 'pacman -S %s'
 URL_pacs = ${TermExec} 'pacman -Ss %s'
 
 # extension handlers
-EXT:doc,rtf = AbiWord %s
-EXT:txt,cc,cpp,h,java,html,htm,epl,tex,latex,js,css,xml,xsl,am,php,css,js,py,rb = gedit %s
+#EXT:doc,rtf = AbiWord %s
+EXT:txt,cc,cpp,h,java,html,htm,epl,tex,latex,js,css,xml,xsl,am,php,css,js,py,rb = vim %s #gedit %s
 EXT:mpeg,mpg,avi,mkv,flv = vlc %s
 EXT:mp3,ogg,m4a,wmv,wma = deadbeef %s
 EXT:ps = gv %s

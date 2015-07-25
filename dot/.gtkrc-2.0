@@ -1,4 +1,3 @@
-include "/home/live/.gtkrc-2.0.mine"
 gtk-theme-name="BlackMATE"
 gtk-icon-theme-name="matefaenzagray"
 gtk-font-name="Sans 10"
