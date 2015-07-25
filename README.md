@@ -5,14 +5,12 @@ I try to make it easy to understand and modify. I also want to easy update my co
 
   
 To install:  
-`git clone https://github.com/pgum/ownHome ~/.ownHome && ~/.ownHome/auto.deployEnv && $SHELL`  
+`git clone https://github.com/pgum/ownHome ~/.ownHome && cd ~/.ownHome/ && make all && $SHELL`  
   
-  
-Have fun :)
 
 # TODO
 * Add a wiki to the project
-* Create update system
+* more comments in the code
 * constantly add new things
 
 # Speed
