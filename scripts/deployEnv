@@ -4,7 +4,7 @@ scriptPath=$repoPath/scripts
 
 #generate config links, backup old
 #n - DRY RUN
-#rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
+#rsync -avrn --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
 rsync -avr --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
 
 #git user&email configuration
