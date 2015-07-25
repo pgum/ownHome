@@ -3,7 +3,9 @@ repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
 scriptPath=$repoPath/scripts
 
 #generate config links, backup old
-rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
+#n - DRY RUN
+#rsync -avnr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
+rsync -avr --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
 
 #git user&email configuration
 git config --global user.name "$(finger $USER | head -n1 | awk -F'Name: ' '{print $2}')"
