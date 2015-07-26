@@ -1,13 +1,12 @@
 #!/bin/bash
 repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
-scriptPath=$repoPath/scripts
 
 #generate config links, backup old
 #n - DRY RUN
-#rsync -avrn --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
-rsync -avr --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d) $repoPath/dot/ ~/
+#rsync -avrn --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M) $repoPath/dot/ ~/
+rsync -avr --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d-%H%M) $repoPath/dot/ ~/
 
 #git user&email configuration
-git config --global user.name "$(finger $USER | head -n1 | awk -F'Name: ' '{print $2}')"
-git config --global user.email "$(finger $USER | head -n1 | cut -d' ' -f2)@$(echo $HOSTNAME)"
+git config --global user.name "${USER}@${HOSTNAME}"
+git config --global user.email "${USER}@${HOSTNAME}"
 
