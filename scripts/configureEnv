@@ -1,0 +1,28 @@
+#!/bin/bash
+# vim: syntax=sh
+
+setGitUserAndEmail(){
+  git config --global user.name "${USER}@${HOSTNAME}"
+  git config --global user.email "${USER}@${HOSTNAME}"
+}
+
+cloneVundlePluginManager(){
+  [ ! -d ~/.vim/bundle/Vundle.vim ] && \
+  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+  vim +PluginInstall +qall #this is how to forward commands to vim
+}
+
+sshKeyGenerationProcedure(){
+  local sshKeyPath="$HOME/.ssh"
+  local sshKeyName="id_rsa"
+
+  [ -f $sshKeyPath/$sshKeyName ] && \
+    echo ${sshKeyPath}/${sshKeyName} exist, no need to create && exit
+  #if doesn't exist, then we create it
+  ssh-keygen -f $sshKeyPath/$sshKeyName -N "" #no passphrase
+  cat ${sshKeyPath}/${sshKeyName}.pub >> ${sshKeyPath}/authorized_keys
+}
+
+setGitUserAndEmail
+cloneVundlePluginManager
+#sshKeyGenerationProcedure
