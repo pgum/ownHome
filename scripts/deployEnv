@@ -5,8 +5,3 @@ repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
 #n - DRY RUN
 #rsync -avrn --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M) $repoPath/dot/ ~/
 rsync -avr --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d-%H%M) $repoPath/dot/ ~/
-
-#git user&email configuration
-git config --global user.name "${USER}@${HOSTNAME}"
-git config --global user.email "${USER}@${HOSTNAME}"
-
