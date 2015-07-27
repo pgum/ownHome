@@ -45,14 +45,12 @@ sshKeyGenerationProcedure(){
 
   [ -f $sshKeyPath/$sshKeyName ] && \
     echo ${sshKeyPath}/${sshKeyName} exist, no need to create && exit
-  #if noti exist, then we create it
+  #if doesn't exist, then we create it
   ssh-keygen -f $sshKeyPath/$sshKeyName -N "" #no passphrase
   cat ${sshKeyPath}/${sshKeyName}.pub >> ${sshKeyPath}/authorized_keys
 }
 
-
 mkdir -p ~/bin #you can add this to your PATH
-
 #comment out thinks you dont want
 installGNUScreenWithVerticalSplit
 installColordiffFromGithub
