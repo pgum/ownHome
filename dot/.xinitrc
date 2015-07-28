@@ -7,11 +7,7 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
 fi
 
 /usr/bin/xdg-user-dirs-update
-
 exec $1
-
-# panel
-#(sleep 1s && tint2) &
 
 # Set wallpaper
 #(sleep 1s && nitrogen --restore) &
@@ -34,6 +30,4 @@ exec $1
 # Onscreen system stats
 (sleep 2 && conky) &
 
-# Desktop launcher dock
-#(sleep 2 && plank) &
 
