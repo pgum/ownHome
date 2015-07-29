@@ -13,7 +13,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 local freedesktopmenu = require("freedesktop.menu")
---local freedesktoputils = require("freedesktop.utils")
 
 -- {{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -22,10 +21,6 @@ if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
-else
---    naughty.notify({ preset = naughty.config.presets.critical,
---                     title = "Wszystko w porzadku :)",
---                     text = "Nic sie nie martw :)" })
 end
 
 -- Handle runtime errors after startup
@@ -46,12 +41,11 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
--- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 beautiful.init("/home/killme/.config/awesome/themes/pjg/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "lxterminal"
-editor = "vim" --os.getenv("EDITOR") or "vim"
+editor = "vim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -77,29 +71,6 @@ if beautiful.wallpaper then
         gears.wallpaper.maximized(beautiful.wallpaper, s, true)
     end
 end
--- }}}
-
--- {{{ autostart
-function run_once(prg,arg_string,pname,screen)
-  if not prg then
-    do return nil end
-  end
-
-  if not pname then
-    pname = prg
-  end
-
-  if not arg_string then 
-    awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. ")",screen)
-  else
-    awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. " " .. arg_string .. ")",screen)
-  end
-end
-
-run_once( "space-fm", " -d" )
-run_once( "nm-applet" )
-run_once( "volumeicon" )
-run_once( "conky" )
 -- }}}
 
 -- {{{ Tags
