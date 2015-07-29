@@ -16,5 +16,6 @@ startup_message off       # Do not display the copyright page.
 
 #screen doesn't operate with bash expansion
 source .screenrc.d/00.dangerous.binds.removed
+source .screenrc.d/10.hardstatus
 source .screenrc.mine
 term screen-256color
