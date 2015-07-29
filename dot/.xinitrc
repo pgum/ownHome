@@ -1,32 +1,18 @@
 #!/bin/bash
 
 # Dbus fix
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval "$(dbus-launch --sh-syntax --exit-with-session)"
-fi
+[ -z "$DBUS_SESSION_BUS_ADDRESS" ] && eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
 /usr/bin/xdg-user-dirs-update
 
 exec awesome
 
-# Set wallpaper
-#(sleep 1s && nitrogen --restore) &
-
-# Enable as required
-#xbacklight -set 100 &
-#/usr/bin/synclient TouchpadOff=1 &
-#xxkb &
-#setxkbmap us &
-
+##Autostart
 # File manager (daemon mode)
-#(sleep 2 && spacefm -d) &
-
+(sleep 2 && spacefm -d) &
 # Networking system tray applet
-#(sleep 3 && nm-applet) &
-
+(sleep 3 && nm-applet) &
 # Volume control
-#(sleep 3 && volumeicon) &
-
+(sleep 3 && volumeicon) &
 # Onscreen system stats
-#(sleep 2 && conky) &
-
+(sleep 2 && conky) &
