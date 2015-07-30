@@ -1,7 +1,12 @@
 #!/bin/bash
-repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
+repoPath=$(readlink -f "$0")
+repoPath=${repoPath%/*/*}
 
-#generate config links, backup old
-#n - DRY RUN
-#rsync -avrn --exclude=README.md --backup --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M) $repoPath/dot/ ~/
-rsync -avr --exclude=README.md --backup --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d-%H%M) $repoPath/dot/ ~/
+backupFlags="--backup --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M)"
+excludeFlag="--exclude=README.md"
+src="$repoPath/dot/"
+dest="$HOME"
+
+rsync -navr $backupFlags $excludeFlag $src $dest #n = DRY RUN
+#rsync -avr $backupFlags $excludeFlag $src $dest
+
