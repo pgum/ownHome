@@ -3,5 +3,5 @@ repoPath=$(dirname $(dirname "$(readlink -f "$0")"))
 
 #generate config links, backup old
 #n - DRY RUN
-#rsync -avrn --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M) $repoPath/dot/ ~/
-rsync -avr --exclude=README.md --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d-%H%M) $repoPath/dot/ ~/
+#rsync -avrn --exclude=README.md --backup --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M) $repoPath/dot/ ~/
+rsync -avr --exclude=README.md --backup --backup-dir=${repoPath}/backups/$(date +%Y-%M-%d-%H%M) $repoPath/dot/ ~/

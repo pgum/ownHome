@@ -1,5 +1,4 @@
 #!/bin/bash
-DE=awesome
 
 # Dbus fix
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
@@ -7,7 +6,8 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
 fi
 
 /usr/bin/xdg-user-dirs-update
-exec $1
+
+exec awesome
 
 # Set wallpaper
 #(sleep 1s && nitrogen --restore) &
@@ -19,15 +19,14 @@ exec $1
 #setxkbmap us &
 
 # File manager (daemon mode)
-(sleep 2 && spacefm -d) &
+#(sleep 2 && spacefm -d) &
 
 # Networking system tray applet
-(sleep 3 && nm-applet) &
+#(sleep 3 && nm-applet) &
 
 # Volume control
-(sleep 3 && volumeicon) &
+#(sleep 3 && volumeicon) &
 
 # Onscreen system stats
-(sleep 2 && conky) &
-
+#(sleep 2 && conky) &
 
