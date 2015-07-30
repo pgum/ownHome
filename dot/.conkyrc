@@ -10,7 +10,7 @@ own_window_type desktop
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 own_window_colour black
 double_buffer yes
-minimum_size 1 1
+minimum_size 300 700
 maximum_width 240
 draw_shades no
 draw_outline no
@@ -38,8 +38,7 @@ RAM: $alignr$mem/$memmax
 $membar
 
 ${font sans-serif:bold:size=8}SYSTEM ${hr 2}
-${font sans-serif:normal:size=8}$sysname $kernel $alignr $machine
-Host:$alignr$nodename
+${font sans-serif:normal:size=8}$nodename $sysname $kernel $alignr $machine
 Uptime:$alignr$uptime
 
 ${font sans-serif:bold:size=8}TOP PROCESSES ${hr 2}
@@ -48,19 +47,19 @@ ${top_mem name 2}${alignr}${top mem 2} %
 $font${top_mem name 3}${alignr}${top mem 3} %
 $font${top_mem name 4}${alignr}${top mem 4} %
 
-${font sans-serif:bold:size=8}SHORTCUT KEYS ${hr 2}
-${font sans-serif:normal:size=8}
-Super+space$alignr Main Menu
-Super+t$alignr Terminal
-Super+f$alignr File Manager
-Super+e$alignr Editor
-Super+w$alignr Web Browser
-Super+q$alignr Force Quit
-Super+r$alignr Read the DOC
-Super+a$alignr Toggle Maximize
-Super+h$alignr Toggle Horizontal
-Super+v$alignr Toggle Vertical
-Super+c$alignr Move to Center
-Super+Arrow$alignr Move
-Alt+F3$alignr Dmenu
-Alt+Super+Arrow$alignr Resize
+#${font sans-serif:bold:size=8}SHORTCUT KEYS ${hr 2}
+#${font sans-serif:normal:size=8}
+#Super+space$alignr Main Menu
+#Super+t$alignr Terminal
+#Super+f$alignr File Manager
+#Super+e$alignr Editor
+#Super+w$alignr Web Browser
+#Super+q$alignr Force Quit
+#Super+r$alignr Read the DOC
+#Super+a$alignr Toggle Maximize
+#Super+h$alignr Toggle Horizontal
+#Super+v$alignr Toggle Vertical
+#Super+c$alignr Move to Center
+#Super+Arrow$alignr Move
+#Alt+F3$alignr Dmenu
+#Alt+Super+Arrow$alignr Resize

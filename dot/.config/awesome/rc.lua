@@ -12,7 +12,10 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
--- {{{ Error handling
+local freedesktopmenu = require("freedesktop.menu")
+--local freedesktoputils = require("freedesktop.utils")
+
+-- {{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -20,9 +23,9 @@ if awesome.startup_errors then
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
 else
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Wszystko w porzadku :)",
-                     text = "Nic sie nie martw :)" })
+--    naughty.notify({ preset = naughty.config.presets.critical,
+--                     title = "Wszystko w porzadku :)",
+--                     text = "Nic sie nie martw :)" })
 end
 
 -- Handle runtime errors after startup
@@ -62,17 +65,9 @@ modkey = "Mod4"
 local layouts =
 {
     awful.layout.suit.floating,
---    awful.layout.suit.tile,
     awful.layout.suit.tile.left,
---    awful.layout.suit.tile.bottom,
---    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
---    awful.layout.suit.spiral,
---    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
---    awful.layout.suit.max.fullscreen,
---    awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -84,44 +79,61 @@ if beautiful.wallpaper then
 end
 -- }}}
 
+-- {{{ autostart
+function run_once(prg,arg_string,pname,screen)
+  if not prg then
+    do return nil end
+  end
+
+  if not pname then
+    pname = prg
+  end
+
+  if not arg_string then 
+    awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. ")",screen)
+  else
+    awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. " " .. arg_string .. ")",screen)
+  end
+end
+
+run_once( "space-fm", " -d" )
+run_once( "nm-applet" )
+run_once( "volumeicon" )
+run_once( "conky" )
+-- }}}
+
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "term", "web", 3, 4, 5, "#"}, s, layouts[5])
+    tags[s] = awful.tag({ "term", "web", "go", "#"}, s, layouts[3])
 end
 -- }}}
 
 -- {{{ Menu
--- Create a laucher widget and a main menu
-myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
-}
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+myawesomestuff = freedesktopmenu.new()
+
+mymainmenu = awful.menu({ items = { { "open terminal", terminal },
+                                    { "stuff", myawesomestuff },
+                                    { "restart", awesome.restart },
+                                    { "lock out", awesome.quit }
                                   }
                         })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 -- {{{ Wibox
---  --  Network usage widget
---   -- Initialize widget, use widget({ type = "textbox" }) for awesome < 3.5
-netwidget = wibox.widget.textbox()
---     -- Register widget
--- vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${wlan0 down_kb}</span> <span color="#7F9F7F">${wlan0 up_kb}</span>', 3)
+--  Network usage widget
+-- Initialize widget, use widget({ type = "textbox" }) for awesome < 3.5
+-- Register widget
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock()
+mytextclock = awful.widget.textclock("%d/%m, %H:%M")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -201,7 +213,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(netwidget)
+    --right_layout:add(netwidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -210,7 +222,6 @@ for s = 1, screen.count() do
     layout:set_left(left_layout)
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
-
     mywibox[s]:set_widget(layout)
 
 -- }}}
@@ -241,7 +252,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey,           }, "`", function () mymainmenu:toggle() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -277,19 +288,20 @@ globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
+--    awful.key({ modkey }, "r",
+--              function ()
+--                  awful.prompt.run({ prompt = "Run Lua code: " },
+--                  mypromptbox[mouse.screen].widget,
+--                  awful.util.eval, nil,
+--                  awful.util.getdir("cache") .. "/history_eval")
+--              end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "x", function() menubar.show() end)
 )
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
+    awful.key({ modkey,           }, "F4",      function (c) c:kill()                         end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
