@@ -3,6 +3,9 @@
 export TERMINAL=lxterminal
 export BROWSER=firefox
 
+batteryCapacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+export PS1="${batteryCapacity}|${PS1}"
+
 # Gtk themes
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
