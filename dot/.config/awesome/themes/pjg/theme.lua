@@ -5,7 +5,7 @@
 theme = {}
 
 theme.wallpaper = "/home/killme/.config/awesome/themes/pjg/bg.jpg"
-theme.font          = "sans 8"
+theme.font          = "GohuFont 8"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -42,8 +42,8 @@ theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = "/usr/share/awesome/themes/default/submenu.png"
-theme.menu_height = 15
-theme.menu_width  = 100
+theme.menu_height = 24 --15
+theme.menu_width  = 150
 
 -- You can add as many variables as
 -- you wish and access them by using
