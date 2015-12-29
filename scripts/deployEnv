@@ -22,5 +22,5 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   synchronizeHomeWithRepo
 else
-  echo Didn't synchronize home with repository
+  echo "Didn't synchronize home with repository"
 fi

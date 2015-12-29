@@ -1,10 +1,10 @@
 #!/bin/bash
 # vim: syntax=sh
 
-source tools2install/*
+for file in tools2install/* ; do [ -f "$file" ] && source "$file" done
 
 mkdir -p ~/bin #you can add this to your PATH
 #comment out thinks you don't want
-installGNUScreenWithVerticalSplit
+#installGNUScreenWithVerticalSplit
 installColordiffFromGithub
-installAckGrep
+#installAckGrep
