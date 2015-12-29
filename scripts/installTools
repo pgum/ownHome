@@ -1,10 +1,18 @@
 #!/bin/bash
 # vim: syntax=sh
+repoPath=$(readlink -f "$0")
+repoPath=${repoPath%/*/*}
 
-for file in tools2install/* ; do [ -f "$file" ] && source "$file" done
+shopt -s globstar
+toolsToInstall=$repoPath/scripts/tools2install/*
+for file in $toolsToInstall; do
+  [ -f "$file" ] && \
+    source "$file"
+done
 
 mkdir -p ~/bin #you can add this to your PATH
-#comment out thinks you don't want
+#comment out things you don't want
 #installScreenWithVsplit
 installColordiff
 #installAckGrep
+
