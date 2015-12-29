@@ -1,43 +1,10 @@
 #!/bin/bash
 # vim: syntax=sh
 
-installGNUScreenWithVerticalSplit(){
-  screenVersion=$(echo $($(which screen) --version) | awk '{print $3}' | tr -d [:alpha:][:punct:])
-  [ ! $(which screen) ] || [ $screenVersion -ge 40201 ] && exit #exit if higher version already installed
-                                                                ##otherwise
-  wget http://ftp.gnu.org/gnu/screen/screen-4.2.1.tar.gz && \   ##get it
-  tar -xf ~/screen-4.2.1.tar.gz && \                            ##untar it
-  mv ~/screen-4.2.1 ~/bin/screen-src && \
-  autoreconf ~/bin/screen-src && \                              ##prepare for configuration
-  ~/bin/screen-src/configure --enable-colors256 && \            ##connfigure with 256 colours enabled
-  make -C ~/bin/screen-src && \                                 ##and make
-  cp ~/bin/screen-src/screen ~/bin/                             ##copy binary to user bin
-
-  make clean -C ~/bin/screen-src                                # #remove unnecessary files
-  rm -rf ~/comm.h ~/config.h ~/config.log ~/config.status
-  rm -rf ~/doc ~/kmapdef.c ~/Makefile ~/osdef.h
-  rm -rf ~/screen-4.2.1.tar.gz ~/term.h
-}
-
-installColordiffFromGithub(){
-  local address="https://raw.github.com/daveewart/colordiff/current/colordiff.pl"
-  local cdfPath='~/bin/colordiff'
-  [ ! $(which colordiff) ] && wget --no-check-certificate ${address} -O ${cdfPath} && chmod +x ${cdfPath}
-}
-
-installAckGrep(){
-  local ackPath='~/bin/ack'
-  [ -f ${ackPath} ] && curl http://beyondgrep.com/ack-2.14-single-file > ${ackPath} && chmod +x ${ackPath}
-}
-
-installClc(){
-  local clcPath='~/bin/clc'
-  [ -f ${clcPath} ] && printf "#!/bin/bash\nclear && printf '\033[3J'" >> ${clcPath} && chmod +x ${clcPath}
-}
+source tools2install/*
 
 mkdir -p ~/bin #you can add this to your PATH
-#comment out thinks you dont want
+#comment out thinks you don't want
 installGNUScreenWithVerticalSplit
 installColordiffFromGithub
 installAckGrep
-installClc

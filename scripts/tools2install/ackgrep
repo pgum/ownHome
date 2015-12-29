@@ -1,0 +1,8 @@
+#!/bin/bash
+# vim: syntax=sh
+
+installAckGrep(){
+  local ackPath='~/bin/ack'
+  [ -f ${ackPath} ] && curl http://beyondgrep.com/ack-2.14-single-file > ${ackPath} && chmod +x ${ackPath}
+}
+

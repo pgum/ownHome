@@ -1,0 +1,9 @@
+#!/bin/bash
+# vim: syntax=sh
+
+installColordiffFromGithub(){
+  local address="https://raw.github.com/daveewart/colordiff/current/colordiff.pl"
+  local cdfPath='~/bin/colordiff'
+  [ ! $(which colordiff) ] && wget --no-check-certificate ${address} -O ${cdfPath} && chmod +x ${cdfPath}
+}
+
