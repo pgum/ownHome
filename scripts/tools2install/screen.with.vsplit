@@ -1,7 +1,7 @@
 #!/bin/bash
 # vim: syntax=sh
 
-installGNUScreenWithVerticalSplit(){
+installScreenWithVsplit(){
   screenVersion=$(echo $($(which screen) --version) | awk '{print $3}' | tr -d [:alpha:][:punct:])
   [ ! $(which screen) ] || [ $screenVersion -ge 40201 ] && exit #exit if higher version already installed
                                                                 ##otherwise
