@@ -1,4 +1,4 @@
-.PHONY: all env tools config tags clean
+.PHONY: all env tools config tags
 
 all: env tools config
 
@@ -9,9 +9,6 @@ tools:
 config:
 	scripts/configureEnv
 
-#maintenance
-clean:
-	scripts/nukeEnv
 #development
 tags:
 	ctags -R --language-force=sh -f ./scripts/tags ./scripts/

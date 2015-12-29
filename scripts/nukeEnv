@@ -1,8 +1,0 @@
-##!/bin/bash
-#scriptPath=$(dirname $(dirname "$(readlink -f "$0")"))
-#
-#shopt -s extglob globstar
-#for addonConfig in $scriptPath/dot/.*
-#  do echo rm -rf ~/$(basename $addonConfig)
-#  done
-#
