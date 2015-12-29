@@ -3,10 +3,11 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-cloneVundlePluginManager	./scripts/installTools	/^cloneVundlePluginManager(){$/;"	f
-installAckGrep	./scripts/installTools	/^installAckGrep(){$/;"	f
-installClc	./scripts/installTools	/^installClc(){$/;"	f
-installColordiffFromGithub	./scripts/installTools	/^installColordiffFromGithub(){$/;"	f
-installGNUScreenWithVerticalSplit	./scripts/installTools	/^installGNUScreenWithVerticalSplit(){$/;"	f
-sshKeyGenerationProcedure	./scripts/installTools	/^sshKeyGenerationProcedure(){$/;"	f
+!_TAG_PROGRAM_VERSION	5.8	//
+cloneVundlePluginManager	./scripts/configureEnv	/^cloneVundlePluginManager(){$/;"	f
+installAckGrep	./scripts/tools2install/ackgrep	/^installAckGrep(){$/;"	f
+installColordiffFromGithub	./scripts/tools2install/colordiff	/^installColordiffFromGithub(){$/;"	f
+installGNUScreenWithVerticalSplit	./scripts/tools2install/screen.with.vsplit	/^installGNUScreenWithVerticalSplit(){$/;"	f
+setGitUserAndEmail	./scripts/configureEnv	/^setGitUserAndEmail(){$/;"	f
+sshKeyGeneration	./scripts/configureEnv	/^sshKeyGeneration(){$/;"	f
+synchronizeHomeWithRepo	./scripts/deployEnv	/^synchronizeHomeWithRepo()$/;"	f
