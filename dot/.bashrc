@@ -4,6 +4,7 @@
 alias tarit='tar -cvf '
 alias untarit='tar -xf '
 
+alias clc="clear && printf '\033[3J'"
 alias h='history | grep $1'
 
 alias ls='ls -A --color=always'
