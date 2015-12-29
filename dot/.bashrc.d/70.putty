@@ -1,8 +1,0 @@
-# vim: syntax=sh
-alias clr="clear && printf '\033[3J'"
-
-#<C-s> putty freezer fix
-case $- in
-  *i*) stty -ixany && stty ixoff -ixon ;;
-esac
-
