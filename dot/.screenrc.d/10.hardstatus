@@ -1,4 +1,0 @@
-#vim: syntax=screenrc
-hardstatus on
-hardstatus alwayslastline
-hardstatus string "%w%=%m/%d %c"
