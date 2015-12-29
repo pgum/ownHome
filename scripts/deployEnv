@@ -1,12 +1,26 @@
 #!/bin/bash
-repoPath=$(readlink -f "$0")
-repoPath=${repoPath%/*/*}
+synchronizeHomeWithRepo()
+{
+  repoPath=$(readlink -f "$0")
+  repoPath=${repoPath%/*/*}
+  backupFlags="--backup --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M)"
+  excludeFlag="--exclude=README.md"
+  source="$repoPath/dot/"
+  destination="$HOME"
+  rsyncArgs=" -avr $backupFlags $excludeFlag $source $destination"
+  dryRunFlag='-n'
 
-backupFlags="--backup --backup-dir=${repoPath}/backups/$(date +%Y-%m-%d-%H%M)"
-excludeFlag="--exclude=README.md"
-src="$repoPath/dot/"
-dest="$HOME"
+  [ "$1" = "dryRun" ] && rsyncArgs="${dryRunFlag}${rsyncArgs}"
+  rsync $rsyncArgs
+}
 
-rsync -navr $backupFlags $excludeFlag $src $dest #n = DRY RUN
-#rsync -avr $backupFlags $excludeFlag $src $dest
-
+echo "This is DRY RUN, see what you will get after install: "
+synchronizeHomeWithRepo dryRun
+read -n 1 -s
+read -p "Do you want to make that changes? [N/y]: " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  synchronizeHomeWithRepo
+else
+  echo Didn't synchronize home with repository
+fi

@@ -9,16 +9,15 @@ setGitUserAndEmail(){
 cloneVundlePluginManager(){
   [ ! -d ~/.vim/bundle/Vundle.vim ] && \
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
-  vim +PluginInstall +qall #this is how to forward commands to vim
+  vim +PluginInstall +qall #this is how you can forward commands to vim
 }
 
-sshKeyGenerationProcedure(){
+sshKeyGeneration(){
   local sshKeyPath="$HOME/.ssh"
   local sshKeyName="id_rsa"
 
   [ -f $sshKeyPath/$sshKeyName ] && \
     echo ${sshKeyPath}/${sshKeyName} exist, no need to create && exit
-  #if doesn't exist, then we create it
   ssh-keygen -f $sshKeyPath/$sshKeyName -N "" #no passphrase
   cat ${sshKeyPath}/${sshKeyName}.pub >> ${sshKeyPath}/authorized_keys
 }
