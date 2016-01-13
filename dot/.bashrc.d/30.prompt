@@ -1,6 +1,6 @@
 # vim: syntax=sh
-if [ ! -n $ohNOCOLOR ]
-  then tempPS1="\u@\h:\W \\$ "
-  else tempPS1="${lcyan}\u${nocolor}@${green}\h${yellow}\W${nocolor} \\$ "
-fi
-export PS1=$tempPS1
+
+colorPS1="${lcyan}\u${nocolor}@${green}\h${yellow}\W${nocolor} \\$ "
+no_colorPS1="\u@\h:\W \\$ "
+
+[ -n $ohNOCOLOR ] && export PS1=${colorPS1} || export PS1=${no_colorPS1}
