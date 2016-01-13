@@ -1,4 +1,5 @@
 # vim: syntax=sh
+
 shopt -s autocd
 shopt -s globstar
 shopt -s extglob
